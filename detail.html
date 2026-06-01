@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chi Tiết Văn Khấn — Văn Khấn Việt</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo-link">
+      <div class="logo-symbol">☸</div>
+      <div class="logo-text">
+        <h1>Văn Khấn Việt</h1>
+        <p>Tra cứu &amp; In văn khấn truyền thống</p>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="index.html">← Danh mục</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+
+  <!-- STEPS BAR -->
+  <div class="steps-bar">
+    <div class="step active" id="step-indicator-1">
+      <div class="step-num">1</div>
+      <span class="step-label">Nhập thông tin</span>
+    </div>
+    <div class="step" id="step-indicator-2">
+      <div class="step-num">2</div>
+      <span class="step-label">Xem trước</span>
+    </div>
+    <div class="step" id="step-indicator-3">
+      <div class="step-num">3</div>
+      <span class="step-label">In / Lưu</span>
+    </div>
+  </div>
+
+  <!-- DETAIL CONTENT BOX -->
+  <div class="detail-content">
+
+    <div class="bai-title" id="bai-title">Đang tải...</div>
+    <div class="bai-desc"  id="bai-desc"></div>
+
+    <!-- BƯỚC 1: FORM -->
+    <div id="step-form">
+      <div class="form-grid" id="form-fields"></div>
+      <div class="btn-row">
+        <a href="index.html" class="btn btn-outline">← Quay lại danh mục</a>
+        <button class="btn btn-primary" id="btn-preview" disabled>
+          Xem trước bài khấn →
+        </button>
+      </div>
+    </div>
+
+    <!-- BƯỚC 2: PREVIEW -->
+    <div id="step-preview" style="display:none">
+      <div class="preview-wrap" id="preview-content"></div>
+      <div class="note-box" id="note-box" style="display:none"></div>
+      <div class="btn-row">
+        <button class="btn btn-outline" id="btn-back">← Quay lại sửa</button>
+        <button class="btn btn-accent" id="btn-print">🖨 In / Xuất PDF</button>
+      </div>
+    </div>
+
+  </div><!-- /detail-content -->
+</div><!-- /page-wrap -->
+
+<!-- VÙNG IN — ẨN TRÊN MÀN HÌNH, CHỈ HIỆN KHI IN -->
+<div id="print-area"></div>
+
+<script src="js/lunar.js"></script>
+<script src="js/van-khan-data.js"></script>
+<script src="js/template-engine.js"></script>
+<script src="js/detail.js"></script>
+</body>
+</html>
