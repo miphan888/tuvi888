@@ -499,27 +499,118 @@ main { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
   .gio-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
-/* ── VĂN KHẤN PRINT ── */
+/* ══════════ VĂN KHẤN STYLES ══════════ */
+.vk-hero {
+  background: linear-gradient(135deg,#7f1d1d 0%,#991b1b 50%,#b45309 100%);
+  padding: 30px 20px 24px; text-align: center; border-radius: 8px;
+  margin-bottom: 20px; position: relative; overflow: hidden;
+}
+.vk-hero::before { content:'☸'; position:absolute; font-size:180px; opacity:0.04; color:#ffd700;
+  top:50%; left:50%; transform:translate(-50%,-50%); pointer-events:none; }
+.vk-hero h2 { font-family:'Noto Serif',serif; font-size:clamp(18px,4vw,26px); color:#ffd700;
+  font-weight:700; margin-bottom:8px; }
+.vk-hero p { color:rgba(255,255,255,0.85); font-size:14px; max-width:500px; margin:0 auto; }
+
+.vk-search-wrap { max-width:580px; margin:0 auto 20px; }
+.vk-search-box { display:flex; align-items:center; background:#fff; border:2px solid var(--border);
+  border-radius:50px; padding:9px 18px; box-shadow:0 3px 12px var(--shadow); gap:8px; }
+.vk-search-box input { border:none; outline:none; font-size:14px; font-family:inherit;
+  color:var(--ink); flex:1; background:transparent; }
+
+.vk-section-title { font-family:'Noto Serif',serif; font-size:16px; font-weight:700;
+  color:var(--red); margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+.vk-section-title::before { content:''; display:inline-block; width:4px; height:18px;
+  background:var(--red); border-radius:2px; }
+
+.vk-cat-grid { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; }
+.vk-cat-btn { display:flex; align-items:center; gap:6px; padding:7px 15px; border-radius:50px;
+  border:2px solid var(--border); background:#fff; color:var(--ink2); font-size:13px;
+  font-weight:500; cursor:pointer; font-family:inherit; transition:all 0.2s; }
+.vk-cat-btn:hover, .vk-cat-btn.active { background:var(--red); border-color:var(--red);
+  color:#fff; box-shadow:0 3px 10px rgba(139,0,0,0.3); }
+
+.vk-card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:14px; margin-bottom:20px; }
+.vk-card { background:#fff; border-radius:12px; border-top:4px solid var(--red);
+  box-shadow:0 2px 12px var(--shadow); padding:18px; cursor:pointer;
+  transition:transform 0.2s,box-shadow 0.2s; display:flex; flex-direction:column; gap:8px; }
+.vk-card:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(139,0,0,0.18); }
+.vk-card-title { font-family:'Noto Serif',serif; font-size:15px; font-weight:700; color:var(--red); }
+.vk-card-desc { font-size:12px; color:var(--ink3); line-height:1.5; flex:1; }
+.vk-card-badge { display:inline-block; padding:3px 10px; border-radius:50px;
+  background:var(--cream2); color:var(--gold2); font-size:11px; font-weight:600;
+  border:1px solid var(--cream3); align-self:flex-start; }
+.vk-empty { text-align:center; padding:40px 20px; color:var(--ink3); grid-column:1/-1; }
+
+/* Steps */
+.vk-steps { display:flex; background:#fff; border-radius:10px 10px 0 0;
+  border-bottom:2px solid var(--cream2); box-shadow:0 2px 8px var(--shadow); overflow:hidden; }
+.vk-step { flex:1; display:flex; align-items:center; justify-content:center; gap:8px;
+  padding:13px 8px; font-size:13px; font-weight:500; color:#aaa;
+  border-bottom:3px solid transparent; transition:all 0.2s; }
+.vk-step-num { width:26px; height:26px; border-radius:50%; background:#e5e7eb; color:#666;
+  display:flex; align-items:center; justify-content:center; font-weight:700; font-size:12px; flex-shrink:0; }
+.vk-active { color:var(--red) !important; border-bottom-color:var(--red) !important; }
+.vk-active .vk-step-num { background:var(--red) !important; color:#fff !important; }
+.vk-done { color:var(--gold2) !important; border-bottom-color:var(--gold2) !important; }
+.vk-done .vk-step-num { background:var(--gold2) !important; color:#fff !important; }
+
+/* Detail box */
+.vk-detail-box { background:#fff; border-radius:0 0 10px 10px;
+  box-shadow:0 4px 20px var(--shadow); padding:26px 28px 32px; }
+.vk-bai-title { font-family:'Noto Serif',serif; font-size:20px; font-weight:700; color:var(--red); margin-bottom:4px; }
+.vk-bai-desc { color:var(--ink3); font-size:13px; margin-bottom:20px; }
+
+/* Form */
+.vk-form-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.vk-form-group { display:flex; flex-direction:column; gap:5px; }
+.vk-form-group.full { grid-column:1/-1; }
+.vk-label { font-size:12px; font-weight:600; color:var(--ink2); }
+.vk-req { color:var(--red); margin-left:2px; }
+
+/* Buttons */
+.vk-btn-row { display:flex; gap:10px; margin-top:22px; flex-wrap:wrap; }
+.vk-btn { padding:10px 22px; border-radius:50px; font-size:13px; font-weight:600;
+  cursor:pointer; font-family:inherit; border:none; display:flex; align-items:center; gap:6px; transition:all 0.2s; }
+.vk-btn-primary { background:var(--red); color:#fff; box-shadow:0 4px 12px rgba(139,0,0,0.3); }
+.vk-btn-primary:disabled { opacity:0.5; cursor:not-allowed; box-shadow:none; }
+.vk-btn-outline { background:#fff; color:var(--red); border:2px solid var(--red) !important; }
+.vk-btn-outline:hover { background:var(--cream2); }
+.vk-btn-accent { background:var(--gold); color:#fff; box-shadow:0 4px 12px rgba(184,134,11,0.3); }
+.vk-btn-accent:hover { background:var(--gold2); }
+
+/* Preview */
+.vk-preview-wrap { background:var(--cream); border:2px solid var(--cream3); border-radius:10px;
+  padding:26px; font-family:'Noto Serif',serif; font-size:14px; line-height:1.9; color:var(--ink);
+  white-space:pre-line; box-shadow:inset 0 2px 8px rgba(0,0,0,0.04); }
+.vk-preview-wrap .filled { color:var(--red); font-weight:700; }
+.vk-preview-wrap .placeholder-empty { color:#aaa; font-style:italic; }
+.vk-note-box { margin-top:14px; padding:13px 16px; background:#fffbeb;
+  border:1.5px solid var(--gold); border-radius:8px; font-size:13px; color:var(--ink2); line-height:1.7; }
+
+/* Print */
 @media print {
-  body * { visibility: hidden !important; }
-  #vk-print-area, #vk-print-area * { visibility: visible !important; }
+  body * { visibility:hidden !important; }
+  #vk-print-area, #vk-print-area * { visibility:visible !important; }
   #vk-print-area {
-    display: block !important;
-    position: fixed !important;
-    top: 0 !important; left: 0 !important;
-    width: 100% !important;
-    padding: 0 !important; margin: 0 !important;
-    font-family: 'Noto Serif', 'Times New Roman', Georgia, serif !important;
-    font-size: 13pt !important; line-height: 1.85 !important;
-    color: #000 !important; white-space: pre-line !important;
+    display:block !important; position:fixed !important; top:0 !important; left:0 !important;
+    width:100% !important; padding:0 !important; margin:0 !important;
+    font-family:'Noto Serif','Times New Roman',Georgia,serif !important;
+    font-size:13pt !important; line-height:1.85 !important; color:#000 !important; white-space:pre-line !important;
   }
-  .vkprint-title {
-    font-family: 'Noto Serif', 'Times New Roman', Georgia, serif !important;
-    font-size: 18pt !important; font-weight: 700 !important;
-    text-align: center !important; margin-bottom: 18pt !important;
-    color: #000 !important;
-  }
-  #vk-print-area strong { font-weight: 700 !important; color: #000 !important; }
+  .vkprint-title { font-family:'Noto Serif','Times New Roman',Georgia,serif !important;
+    font-size:18pt !important; font-weight:700 !important; text-align:center !important;
+    margin-bottom:18pt !important; color:#000 !important; display:block !important; }
+  #vk-print-area strong { font-weight:700 !important; color:#000 !important; }
+}
+
+@media (max-width:640px) {
+  .vk-form-grid { grid-template-columns:1fr; }
+  .vk-form-group.full { grid-column:1; }
+  .vk-detail-box { padding:18px 16px 24px; }
+  .vk-step span.vk-step-label { display:none; }
+  .vk-btn-row { flex-direction:column; }
+  .vk-btn { justify-content:center; }
+  .vk-card-grid { grid-template-columns:1fr; }
 }
 
 </style>
@@ -930,90 +1021,79 @@ main { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
   </div>
 </section>
 
+
 <!-- ══════════ SECTION: VĂN KHẤN ══════════ -->
 <section id="sect-vankhan" class="section">
 
-  <!-- Hero nhỏ -->
-  <div style="background:linear-gradient(135deg,#7f1d1d 0%,#991b1b 50%,#b45309 100%);padding:32px 20px 26px;text-align:center;border-radius:8px;margin-bottom:20px;position:relative;overflow:hidden;">
-    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:200px;opacity:0.04;color:#ffd700;pointer-events:none;">☸</div>
-    <h2 style="font-family:'Noto Serif',serif;font-size:clamp(20px,4vw,28px);color:#ffd700;font-weight:700;text-shadow:0 2px 12px rgba(0,0,0,0.3);margin-bottom:8px;">📜 Kho Văn Khấn Truyền Thống Việt Nam</h2>
-    <p style="color:rgba(255,255,255,0.85);font-size:14px;max-width:520px;margin:0 auto;">Tra cứu hơn 24 bài văn khấn chính thống — điền thông tin, xem trước và in ngay</p>
-  </div>
-
-  <!-- Tìm kiếm -->
-  <div style="max-width:600px;margin:0 auto 20px;">
-    <div style="display:flex;align-items:center;background:#fff;border:2px solid var(--border);border-radius:50px;padding:10px 20px;box-shadow:0 4px 16px var(--shadow);gap:10px;">
-      <span style="color:var(--red);font-size:18px;flex-shrink:0;">🔍</span>
-      <input type="text" id="vk-search" placeholder="Tìm bài văn khấn... (VD: giỗ, khai trương, thôi nôi...)"
-        style="border:none;outline:none;font-size:14px;font-family:inherit;color:var(--ink);flex:1;background:transparent;"
-        oninput="vkRenderCards()">
+  <!-- List view -->
+  <div id="vk-list-view">
+    <div class="vk-hero">
+      <h2>📜 Kho Văn Khấn Truyền Thống Việt Nam</h2>
+      <p>Tra cứu hơn 24 bài văn khấn chính thống — điền thông tin, xem trước và in ngay</p>
     </div>
+
+    <div class="vk-search-wrap">
+      <div class="vk-search-box">
+        <span style="color:var(--red);font-size:17px;flex-shrink:0;">🔍</span>
+        <input type="text" id="vk-search" placeholder="Tìm bài văn khấn... (VD: giỗ, khai trương, thôi nôi...)" oninput="vkRenderCards()">
+      </div>
+    </div>
+
+    <p class="vk-section-title">Danh mục</p>
+    <div id="vk-cat-grid" class="vk-cat-grid"></div>
+
+    <p class="vk-section-title">Các bài văn khấn</p>
+    <div id="vk-card-grid" class="vk-card-grid"></div>
   </div>
 
-  <!-- Danh mục -->
-  <div style="margin-bottom:8px;">
-    <p style="font-family:'Noto Serif',serif;font-size:16px;font-weight:700;color:var(--red);padding:0 0 10px;display:flex;align-items:center;gap:8px;">
-      <span style="display:inline-block;width:4px;height:18px;background:var(--red);border-radius:2px;"></span>Danh mục
-    </p>
-    <div id="vk-cat-grid" style="display:flex;flex-wrap:wrap;gap:8px;padding-bottom:16px;"></div>
-  </div>
-
-  <!-- Lưới bài khấn -->
-  <div>
-    <p style="font-family:'Noto Serif',serif;font-size:16px;font-weight:700;color:var(--red);padding:0 0 12px;display:flex;align-items:center;gap:8px;">
-      <span style="display:inline-block;width:4px;height:18px;background:var(--red);border-radius:2px;"></span>Các bài văn khấn
-    </p>
-    <div id="vk-card-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;"></div>
-  </div>
-
-  <!-- ── CHI TIẾT (ẩn mặc định) ── -->
-  <div id="vk-detail" style="display:none;margin-top:24px;">
+  <!-- Detail view (ẩn mặc định) -->
+  <div id="vk-detail-view" style="display:none;">
 
     <!-- Thanh bước -->
-    <div id="vk-steps-bar" style="display:flex;background:#fff;border-bottom:2px solid var(--cream2);border-radius:10px 10px 0 0;box-shadow:0 2px 8px var(--shadow);overflow:hidden;">
-      <div class="vk-step vk-step-active" id="vk-step-1" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 10px;font-size:13px;font-weight:500;border-bottom:3px solid var(--red);color:var(--red);">
-        <span style="width:26px;height:26px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;">1</span>
+    <div class="vk-steps">
+      <div class="vk-step vk-active" id="vk-si-1">
+        <span class="vk-step-num">1</span>
         <span class="vk-step-label">Nhập thông tin</span>
       </div>
-      <div class="vk-step" id="vk-step-2" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 10px;font-size:13px;font-weight:500;color:#aaa;border-bottom:3px solid transparent;">
-        <span id="vk-step2-num" style="width:26px;height:26px;border-radius:50%;background:#e5e7eb;color:#666;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;">2</span>
+      <div class="vk-step" id="vk-si-2">
+        <span class="vk-step-num">2</span>
         <span class="vk-step-label">Xem trước</span>
       </div>
-      <div class="vk-step" id="vk-step-3" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 10px;font-size:13px;font-weight:500;color:#aaa;border-bottom:3px solid transparent;">
-        <span id="vk-step3-num" style="width:26px;height:26px;border-radius:50%;background:#e5e7eb;color:#666;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;">3</span>
+      <div class="vk-step" id="vk-si-3">
+        <span class="vk-step-num">3</span>
         <span class="vk-step-label">In / Lưu</span>
       </div>
     </div>
 
-    <!-- Nội dung chi tiết -->
-    <div style="background:#fff;border-radius:0 0 10px 10px;box-shadow:0 4px 20px var(--shadow);padding:28px 30px 36px;">
-      <div id="vk-bai-title" style="font-family:'Noto Serif',serif;font-size:20px;font-weight:700;color:var(--red);margin-bottom:5px;"></div>
-      <div id="vk-bai-desc" style="color:var(--ink3);font-size:13px;margin-bottom:22px;"></div>
+    <div class="vk-detail-box">
+      <div class="vk-bai-title" id="vk-bai-title"></div>
+      <div class="vk-bai-desc" id="vk-bai-desc"></div>
 
-      <!-- Bước 1: Form -->
+      <!-- Bước 1: Form nhập -->
       <div id="vk-step-form">
-        <div id="vk-form-fields" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;"></div>
-        <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
-          <button onclick="vkBackToList()" style="padding:11px 24px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;background:#fff;color:var(--red);border:2px solid var(--red);transition:all 0.2s;" onmouseover="this.style.background='var(--cream2)'" onmouseout="this.style.background='#fff'">← Quay lại danh mục</button>
-          <button id="vk-btn-preview" disabled onclick="vkShowPreview()" style="padding:11px 24px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;background:var(--red);color:#fff;border:none;box-shadow:0 4px 14px rgba(139,0,0,0.3);transition:all 0.2s;">Xem trước bài khấn →</button>
+        <div class="vk-form-grid" id="vk-form-fields"></div>
+        <div class="vk-btn-row">
+          <button class="vk-btn vk-btn-outline" onclick="vkBackToList()">← Quay lại danh mục</button>
+          <button class="vk-btn vk-btn-primary" id="vk-btn-preview" disabled onclick="vkShowPreview()">Xem trước bài khấn →</button>
         </div>
       </div>
 
-      <!-- Bước 2: Preview -->
+      <!-- Bước 2: Xem trước -->
       <div id="vk-step-preview" style="display:none;">
-        <div id="vk-preview-content" style="background:var(--cream);border:2px solid var(--cream3);border-radius:10px;padding:28px;font-family:'Noto Serif',serif;font-size:14px;line-height:1.9;color:var(--ink);white-space:pre-line;box-shadow:inset 0 2px 8px rgba(0,0,0,0.04);"></div>
-        <div id="vk-note-box" style="display:none;margin-top:16px;padding:14px 18px;background:#fffbeb;border:1.5px solid var(--gold);border-radius:8px;font-size:13px;color:var(--ink2);line-height:1.7;"></div>
-        <div style="display:flex;gap:12px;margin-top:22px;flex-wrap:wrap;">
-          <button onclick="vkBackToForm()" style="padding:11px 24px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;background:#fff;color:var(--red);border:2px solid var(--red);transition:all 0.2s;" onmouseover="this.style.background='var(--cream2)'" onmouseout="this.style.background='#fff'">← Quay lại sửa</button>
-          <button onclick="vkDoPrint()" style="padding:11px 24px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;background:var(--gold);color:#fff;border:none;box-shadow:0 4px 14px rgba(184,134,11,0.3);transition:all 0.2s;">🖨 In / Xuất PDF</button>
+        <div class="vk-preview-wrap" id="vk-preview-content"></div>
+        <div class="vk-note-box" id="vk-note-box" style="display:none;"></div>
+        <div class="vk-btn-row">
+          <button class="vk-btn vk-btn-outline" onclick="vkSetStep(1)">← Quay lại sửa</button>
+          <button class="vk-btn vk-btn-accent" onclick="vkDoPrint()">🖨 In / Xuất PDF</button>
         </div>
       </div>
     </div>
-  </div>
+
+  </div><!-- /detail-view -->
 
 </section>
 
-<!-- VÙNG IN VĂN KHẤN -->
+<!-- Vùng in văn khấn (ẩn trên màn hình) -->
 <div id="vk-print-area" style="display:none;"></div>
 
 </main>
@@ -1604,7 +1684,6 @@ function init() {
 // ══════════════════════════════════════════════════════════
 
 function showSection(name) {
-  if(name==='vankhan') setTimeout(initVanKhan,50);
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('sect-' + name).classList.add('active');
@@ -2462,6 +2541,9 @@ function showBatuTab(name) {
 // ══════════════════════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════════════════════
+
+
+// ═══ VAN KHAN DATA ═══
 // ══════════════════════════════════════════════════════
 // VAN-KHAN-DATA.JS — Dữ liệu 24 bài văn khấn truyền thống
 // ══════════════════════════════════════════════════════
@@ -3198,17 +3280,114 @@ Nam mô A Di Đà Phật! (3 lần)`,
 ]; // end VAN_KHAN_DATA
 
 
-
+// ═══ TEMPLATE ENGINE ═══
 // ══════════════════════════════════════════════════════
-// VĂN KHẤN — Tích hợp vào LịchViệt Pro
+// TEMPLATE-ENGINE.JS — Xử lý thay thế placeholder
 // ══════════════════════════════════════════════════════
 
-// Note: solar2Lunar, THIEN_CAN, DIA_CHI already defined above
-// We reuse them. Only define THANG_TEN & formatNgayAmLich if not already:
-if (typeof THANG_TEN === 'undefined') {
-  var THANG_TEN = ['Giêng','Hai','Ba','Tư','Năm','Sáu','Bảy','Tám','Chín','Mười','Mười Một','Chạp'];
+/**
+ * Xử lý template và thay thế tất cả placeholder
+ * @param {object} vanKhan - Đối tượng bài văn khấn
+ * @param {object} formData - Dữ liệu người dùng nhập
+ * @param {boolean} forPrint - true = dùng thẻ <strong>, false = dùng <strong class="filled">
+ * @returns {string} HTML đã xử lý
+ */
+function vkProcessTemplate(vanKhan, formData, forPrint = false) {
+  let content = vanKhan.content;
+
+  // 1. Xử lý ngày âm lịch
+  if (formData.ngayDuong) {
+    const parts = formData.ngayDuong.split('-');
+    if (parts.length === 3) {
+      const ngayFormatted = vkFormatNgayAmLich(parts[2], parts[1], parts[0]);
+      content = content.replace(/\{\{ngayAmLich\}\}/g, vkWrapFilled(ngayFormatted, forPrint));
+    }
+  }
+
+  // 2. Xử lý suffix tự động
+  if (formData.tenVo && formData.tenVo.trim()) {
+    content = content.replace(/\{\{tenVoSuffix\}\}/g, vkWrapFilled(` cùng vợ là ${formData.tenVo.trim()}`, forPrint));
+  } else {
+    content = content.replace(/\{\{tenVoSuffix\}\}/g, '');
+  }
+
+  if (formData.tenChong && formData.tenChong.trim()) {
+    content = content.replace(/\{\{tenChongSuffix\}\}/g, vkWrapFilled(` cùng chồng là ${formData.tenChong.trim()}`, forPrint));
+  } else {
+    content = content.replace(/\{\{tenChongSuffix\}\}/g, '');
+  }
+
+  // 3. conLabel
+  if (formData.gioiTinhCon === 'Gái') {
+    content = content.replace(/\{\{conLabel\}\}/g, 'con gái');
+  } else {
+    content = content.replace(/\{\{conLabel\}\}/g, 'con trai');
+  }
+
+  // 4. Thay thế tất cả placeholder đơn giản
+  const fields = [
+    'tenChuNha','tenChong','tenVo','tenCon','diaChi','diaChiMoi',
+    'tenOngBa','moiQuanHe','tenCuaHang','tenChua','bienSoXe','gioiTinhCon'
+  ];
+
+  fields.forEach(field => {
+    const regex = new RegExp(`\\{\\{${field}\\}\\}`, 'g');
+    const val = formData[field] ? formData[field].trim() : '';
+    if (val) {
+      content = content.replace(regex, vkWrapFilled(val, forPrint));
+    } else {
+      content = content.replace(regex, '<span class="placeholder-empty">............</span>');
+    }
+  });
+
+  // 5. Xóa bất kỳ placeholder còn sót lại
+  content = content.replace(/\{\{[^}]+\}\}/g, '<span class="placeholder-empty">............</span>');
+
+  return content;
 }
 
+function vkWrapFilled(value, forPrint) {
+  if (forPrint) {
+    return `<strong>${value}</strong>`;
+  }
+  return `<strong class="filled">${value}</strong>`;
+}
+
+/**
+ * Lấy giá trị mặc định ngày hôm nay theo định dạng YYYY-MM-DD
+ */
+function vkGetTodayString() {
+  const d = new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+/**
+ * Config cho từng field: label, type, placeholder
+ */
+const VK_FIELD_CONFIG = {
+  tenChuNha:   { label: 'Họ tên chủ nhà / người đại diện', type: 'text',     ph: 'VD: Nguyễn Văn An',      required: true },
+  tenChong:    { label: 'Họ tên người chồng',               type: 'text',     ph: 'VD: Nguyễn Văn An',      required: false },
+  tenVo:       { label: 'Họ tên người vợ',                  type: 'text',     ph: 'VD: Trần Thị Bình',      required: false },
+  tenCon:      { label: 'Họ tên con',                       type: 'text',     ph: 'VD: Nguyễn Minh Khoa',   required: true },
+  gioiTinhCon: { label: 'Giới tính con',                    type: 'select',   opts: ['Trai','Gái'],          required: true },
+  diaChi:      { label: 'Địa chỉ gia đình',                 type: 'textarea', ph: 'Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành phố', required: true },
+  diaChiMoi:   { label: 'Địa chỉ nhà mới',                  type: 'textarea', ph: 'Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành phố', required: true },
+  ngayDuong:   { label: 'Ngày cúng (Dương lịch)',           type: 'date',     ph: '',                        required: true },
+  tenOngBa:    { label: 'Họ tên người đã mất',              type: 'text',     ph: 'VD: Nguyễn Văn Thắng',   required: true },
+  moiQuanHe:   { label: 'Mối quan hệ',                      type: 'text',     ph: 'VD: Cha, Mẹ, Ông Nội, Bà Ngoại...', required: true },
+  tenCuaHang:  { label: 'Tên cửa hàng / công ty',           type: 'text',     ph: 'VD: Cửa hàng Hoa Việt',  required: true },
+  tenChua:     { label: 'Tên chùa / đền / phủ',             type: 'text',     ph: 'VD: Chùa Trấn Quốc',     required: true },
+  bienSoXe:    { label: 'Biển số xe',                       type: 'text',     ph: 'VD: 51G-123.45',          required: true },
+};
+
+
+// ═══ VK FORMAT HELPER ═══
+
+// VK: Wrapper dùng solar2Lunar đã có sẵn
+const VK_THANG_TEN = ['Giêng','Hai','Ba','Tư','Năm','Sáu','Bảy','Tám','Chín','Mười','Mười Một','Chạp'];
 function vkFormatNgayAmLich(dd, mm, yy) {
   var d = parseInt(dd), m = parseInt(mm), y = parseInt(yy);
   var res = solar2Lunar(d, m, y);
@@ -3216,123 +3395,129 @@ function vkFormatNgayAmLich(dd, mm, yy) {
   var can = ((ly - 4) % 10 + 10) % 10;
   var chi = ((ly - 4) % 12 + 12) % 12;
   var canChi = THIEN_CAN[can] + ' ' + DIA_CHI[chi];
-  var tenThang = THANG_TEN[lm - 1];
-  return 'ngày ' + d + ' tháng ' + m + ' năm ' + y + ' (nhằm ngày ' + ld + ' tháng ' + tenThang + (isLeap ? ' nhuận' : '') + ' năm ' + canChi + ')';
+  var tenThang = VK_THANG_TEN[lm - 1];
+  return 'ngày ' + d + ' tháng ' + m + ' năm ' + y +
+    ' (nhằm ngày ' + ld + ' tháng ' + tenThang + (isLeap ? ' nhuận' : '') +
+    ' năm ' + canChi + ')';
 }
 
+
+// ═══ VK APP ═══
+
+// ══════════════════════════════════════════════════════
+// MODULE VĂN KHẤN — Tích hợp vào LịchViệt Pro
+// ══════════════════════════════════════════════════════
+
 const VK_CATEGORIES = [
-  { id: 'all',        name: 'Tất cả',            icon: '📜' },
-  { id: 'gia-tien',   name: 'Cúng Gia Tiên',     icon: '🏠' },
-  { id: 'le-tet',     name: 'Lễ Tết',            icon: '🧧' },
-  { id: 'hon-nhan',   name: 'Hôn Nhân',          icon: '💒' },
-  { id: 'thoi-noi',   name: 'Thôi Nôi - Đầy Tháng', icon: '👶' },
-  { id: 'tang-le',    name: 'Tang Lễ',            icon: '🕯️' },
-  { id: 'nha-moi',    name: 'Nhà Mới',           icon: '🏡' },
-  { id: 'khai-truong',name: 'Khai Trương',        icon: '🎊' },
-  { id: 'chua-den',   name: 'Chùa - Đền - Phủ',  icon: '⛩️' },
-  { id: 'xe-moi',     name: 'Cúng Xe Mới',       icon: '🚗' },
+  { id: 'all',         name: 'Tất cả',               icon: '📜' },
+  { id: 'gia-tien',    name: 'Cúng Gia Tiên',        icon: '🏠' },
+  { id: 'le-tet',      name: 'Lễ Tết',               icon: '🧧' },
+  { id: 'hon-nhan',    name: 'Hôn Nhân',             icon: '💒' },
+  { id: 'thoi-noi',    name: 'Thôi Nôi - Đầy Tháng',icon: '👶' },
+  { id: 'tang-le',     name: 'Tang Lễ',              icon: '🕯️' },
+  { id: 'nha-moi',     name: 'Nhà Mới',              icon: '🏡' },
+  { id: 'khai-truong', name: 'Khai Trương',          icon: '🎊' },
+  { id: 'chua-den',    name: 'Chùa - Đền - Phủ',    icon: '⛩️' },
+  { id: 'xe-moi',      name: 'Cúng Xe Mới',         icon: '🚗' },
 ];
 const VK_CAT_MAP = {};
 VK_CATEGORIES.forEach(function(c){ VK_CAT_MAP[c.id] = c.name; });
 
-let vkCurrentCat = 'all';
-let vkCurrentVanKhan = null;
+var vkCurrentCat = 'all';
+var vkCurrentVanKhan = null;
+var vkInited = false;
+
+function initVanKhan() {
+  if (vkInited) return;
+  vkInited = true;
+  vkRenderCategoryBtns();
+  vkRenderCards();
+}
 
 function vkRenderCategoryBtns() {
-  const wrap = document.getElementById('vk-cat-grid');
+  var wrap = document.getElementById('vk-cat-grid');
   if (!wrap) return;
   wrap.innerHTML = '';
   VK_CATEGORIES.forEach(function(c) {
-    const btn = document.createElement('button');
-    btn.style.cssText = 'display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:50px;border:2px solid var(--border);background:' + (c.id === vkCurrentCat ? 'var(--red)' : '#fff') + ';color:' + (c.id === vkCurrentCat ? '#fff' : 'var(--ink2)') + ';font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;transition:all 0.2s;';
-    btn.innerHTML = '<span style="font-size:15px;">' + c.icon + '</span>' + c.name;
-    btn.addEventListener('click', function() {
-      vkCurrentCat = c.id;
-      vkRenderCategoryBtns();
-      vkRenderCards();
-    });
+    var btn = document.createElement('button');
+    var isActive = c.id === vkCurrentCat;
+    btn.className = 'vk-cat-btn' + (isActive ? ' active' : '');
+    btn.innerHTML = '<span>' + c.icon + '</span> ' + c.name;
+    btn.onclick = function() { vkCurrentCat = c.id; vkRenderCategoryBtns(); vkRenderCards(); };
     wrap.appendChild(btn);
   });
 }
 
 function vkRenderCards() {
-  const grid = document.getElementById('vk-card-grid');
+  var grid = document.getElementById('vk-card-grid');
   if (!grid) return;
-  const term = (document.getElementById('vk-search').value || '').toLowerCase();
-
-  let list = VAN_KHAN_DATA;
+  var searchEl = document.getElementById('vk-search');
+  var term = searchEl ? searchEl.value.toLowerCase() : '';
+  var list = VAN_KHAN_DATA.slice();
   if (vkCurrentCat !== 'all') list = list.filter(function(v){ return v.category === vkCurrentCat; });
-  if (term) list = list.filter(function(v){ return v.title.toLowerCase().includes(term) || v.description.toLowerCase().includes(term); });
+  if (term) list = list.filter(function(v){ return v.title.toLowerCase().indexOf(term) >= 0 || v.description.toLowerCase().indexOf(term) >= 0; });
 
   if (list.length === 0) {
-    grid.innerHTML = '<div style="text-align:center;padding:50px 20px;color:var(--ink3);grid-column:1/-1;"><div style="font-size:40px;margin-bottom:10px;">🔍</div><p>Không tìm thấy bài văn khấn phù hợp.</p></div>';
+    grid.innerHTML = '<div class="vk-empty"><div style="font-size:40px;margin-bottom:10px;">🔍</div><p>Không tìm thấy bài văn khấn phù hợp.</p></div>';
     return;
   }
-
   grid.innerHTML = '';
   list.forEach(function(v) {
-    const catName = VK_CAT_MAP[v.category] || v.category;
-    const div = document.createElement('div');
-    div.style.cssText = 'background:#fff;border-radius:12px;border-top:4px solid var(--red);box-shadow:0 2px 12px var(--shadow);padding:20px;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;display:flex;flex-direction:column;gap:10px;';
-    div.innerHTML = '<div style="font-family:'Noto Serif',serif;font-size:15px;font-weight:700;color:var(--red);">' + v.title + '</div><div style="font-size:12px;color:var(--ink3);line-height:1.5;flex:1;">' + v.description + '</div><span style="display:inline-block;padding:3px 11px;border-radius:50px;background:var(--cream2);color:var(--gold2);font-size:11px;font-weight:600;border:1px solid var(--cream3);align-self:flex-start;">' + catName + '</span>';
-    div.addEventListener('mouseenter', function(){ this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(139,0,0,0.18)'; });
-    div.addEventListener('mouseleave', function(){ this.style.transform='';this.style.boxShadow='0 2px 12px var(--shadow)'; });
-    div.addEventListener('click', function(){ vkOpenDetail(v); });
+    var catName = VK_CAT_MAP[v.category] || v.category;
+    var div = document.createElement('div');
+    div.className = 'vk-card';
+    div.innerHTML = '<div class="vk-card-title">' + v.title + '</div>' +
+      '<div class="vk-card-desc">' + v.description + '</div>' +
+      '<span class="vk-card-badge">' + catName + '</span>';
+    div.onclick = function(){ vkOpenDetail(v); };
     grid.appendChild(div);
   });
 }
 
 function vkOpenDetail(vanKhan) {
   vkCurrentVanKhan = vanKhan;
-  document.getElementById('vk-detail').style.display = 'block';
+  document.getElementById('vk-list-view').style.display = 'none';
+  document.getElementById('vk-detail-view').style.display = 'block';
   document.getElementById('vk-bai-title').textContent = vanKhan.title;
   document.getElementById('vk-bai-desc').textContent = vanKhan.description;
+  document.getElementById('sect-vankhan').scrollIntoView({behavior:'smooth',block:'start'});
   vkRenderForm(vanKhan);
   vkSetStep(1);
-  document.getElementById('vk-detail').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function vkBackToList() {
-  document.getElementById('vk-detail').style.display = 'none';
+  document.getElementById('vk-detail-view').style.display = 'none';
+  document.getElementById('vk-list-view').style.display = 'block';
   vkCurrentVanKhan = null;
 }
 
-function vkGetTodayString() {
-  const d = new Date();
-  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
-}
-
 function vkRenderForm(vanKhan) {
-  const wrap = document.getElementById('vk-form-fields');
+  var wrap = document.getElementById('vk-form-fields');
   wrap.innerHTML = '';
-
-  const allFields = vanKhan.requiredFields.map(function(f){ return {key:f,required:true}; })
+  var allFields = vanKhan.requiredFields.map(function(f){ return {key:f,required:true}; })
     .concat(vanKhan.optionalFields.map(function(f){ return {key:f,required:false}; }));
-  const seen = new Set();
-  const uniqFields = allFields.filter(function(f){ if(seen.has(f.key))return false;seen.add(f.key);return true; });
+  var seen = {};
+  var uniqFields = allFields.filter(function(f){ if(seen[f.key])return false; seen[f.key]=true; return true; });
 
   uniqFields.forEach(function(item) {
-    const cfg = FIELD_CONFIG[item.key];
+    var cfg = VK_FIELD_CONFIG[item.key];
     if (!cfg) return;
-    const div = document.createElement('div');
-    div.style.cssText = 'display:flex;flex-direction:column;gap:5px;' + (cfg.type === 'textarea' ? 'grid-column:1/-1;' : '');
-    if (cfg.type === 'textarea') div.setAttribute('style', 'display:flex;flex-direction:column;gap:5px;grid-column:1/-1;');
-
-    let labelHTML = '<label style="font-size:12px;font-weight:600;color:var(--ink2);">' + cfg.label + (item.required ? '<span style="color:var(--red);margin-left:2px;">*</span>' : '') + '</label>';
-    let inputHTML = '';
-    const inputStyle = 'padding:9px 12px;border:1.5px solid var(--border);border-radius:7px;font-size:13px;font-family:inherit;color:var(--ink);background:#fff;outline:none;width:100%;transition:border-color 0.2s;';
-
+    var div = document.createElement('div');
+    div.className = 'vk-form-group' + (cfg.type === 'textarea' ? ' full' : '');
+    var req = item.required ? '<span class="vk-req">*</span>' : '';
+    var inputStyle = 'padding:9px 12px;border:1.5px solid var(--border);border-radius:7px;font-size:14px;font-family:inherit;color:var(--ink);background:#fff;outline:none;width:100%;box-sizing:border-box;';
+    var inputHTML = '';
     if (cfg.type === 'select') {
-      inputHTML = '<select id="vkf-' + item.key + '" data-vkfield="' + item.key + '" style="' + inputStyle + '">' + cfg.opts.map(function(o){ return '<option value="'+o+'">'+o+'</option>'; }).join('') + '</select>';
+      inputHTML = '<select id="vkf-' + item.key + '" data-vkfield="' + item.key + '" style="' + inputStyle + '">' +
+        cfg.opts.map(function(o){ return '<option value="' + o + '">' + o + '</option>'; }).join('') + '</select>';
     } else if (cfg.type === 'textarea') {
-      inputHTML = '<textarea id="vkf-' + item.key + '" data-vkfield="' + item.key + '" placeholder="' + (cfg.ph||'') + '" rows="3" style="' + inputStyle + 'resize:vertical;min-height:70px;"></textarea>';
+      inputHTML = '<textarea id="vkf-' + item.key + '" data-vkfield="' + item.key + '" placeholder="' + (cfg.ph||'') + '" rows="3" style="' + inputStyle + 'resize:vertical;min-height:72px;"></textarea>';
     } else if (cfg.type === 'date') {
       inputHTML = '<input type="date" id="vkf-' + item.key + '" data-vkfield="' + item.key + '" value="' + vkGetTodayString() + '" style="' + inputStyle + '">';
     } else {
       inputHTML = '<input type="text" id="vkf-' + item.key + '" data-vkfield="' + item.key + '" placeholder="' + (cfg.ph||'') + '" style="' + inputStyle + '">';
     }
-
-    div.innerHTML = labelHTML + inputHTML;
+    div.innerHTML = '<label class="vk-label">' + cfg.label + req + '</label>' + inputHTML;
     wrap.appendChild(div);
   });
 
@@ -3342,151 +3527,63 @@ function vkRenderForm(vanKhan) {
 }
 
 function vkValidateForm(vanKhan) {
-  let valid = true;
+  var valid = true;
   vanKhan.requiredFields.forEach(function(key) {
-    const el = document.getElementById('vkf-' + key);
+    var el = document.getElementById('vkf-' + key);
     if (!el || !el.value || !el.value.trim()) valid = false;
   });
-  const btn = document.getElementById('vk-btn-preview');
+  var btn = document.getElementById('vk-btn-preview');
   if (btn) {
     btn.disabled = !valid;
-    btn.style.background = valid ? 'var(--red)' : '#d1d5db';
-    btn.style.color = valid ? '#fff' : '#9ca3af';
+    btn.style.opacity = valid ? '1' : '0.5';
     btn.style.cursor = valid ? 'pointer' : 'not-allowed';
-    btn.style.boxShadow = valid ? '0 4px 14px rgba(139,0,0,0.3)' : 'none';
   }
 }
 
 function vkGetFormData() {
-  const data = {};
-  document.querySelectorAll('[data-vkfield]').forEach(function(el) { data[el.dataset.vkfield] = el.value; });
+  var data = {};
+  document.querySelectorAll('[data-vkfield]').forEach(function(el){ data[el.dataset.vkfield] = el.value; });
   return data;
 }
 
-function vkWrapFilled(value) {
-  return '<strong style="color:var(--red);font-weight:700;">' + value + '</strong>';
-}
-
-function vkProcessTemplate(vanKhan, formData) {
-  let content = vanKhan.content;
-
-  if (formData.ngayDuong) {
-    const parts = formData.ngayDuong.split('-');
-    if (parts.length === 3) {
-      const ngayFormatted = vkFormatNgayAmLich(parts[2], parts[1], parts[0]);
-      content = content.replace(/\{\{ngayAmLich\}\}/g, vkWrapFilled(ngayFormatted));
-    }
-  }
-
-  if (formData.tenVo && formData.tenVo.trim()) {
-    content = content.replace(/\{\{tenVoSuffix\}\}/g, vkWrapFilled(' cùng vợ là ' + formData.tenVo.trim()));
-  } else { content = content.replace(/\{\{tenVoSuffix\}\}/g, ''); }
-
-  if (formData.tenChong && formData.tenChong.trim()) {
-    content = content.replace(/\{\{tenChongSuffix\}\}/g, vkWrapFilled(' cùng chồng là ' + formData.tenChong.trim()));
-  } else { content = content.replace(/\{\{tenChongSuffix\}\}/g, ''); }
-
-  if (formData.gioiTinhCon === 'Gái') {
-    content = content.replace(/\{\{conLabel\}\}/g, 'con gái');
-  } else { content = content.replace(/\{\{conLabel\}\}/g, 'con trai'); }
-
-  ['tenChuNha','tenChong','tenVo','tenCon','diaChi','diaChiMoi','tenOngBa','moiQuanHe','tenCuaHang','tenChua','bienSoXe','gioiTinhCon'].forEach(function(field) {
-    const regex = new RegExp('\\{\\{' + field + '\\}\\}', 'g');
-    const val = formData[field] ? formData[field].trim() : '';
-    if (val) { content = content.replace(regex, vkWrapFilled(val)); }
-    else { content = content.replace(regex, '<span style="color:#aaa;font-style:italic;">............</span>'); }
-  });
-
-  content = content.replace(/\{\{[^}]+\}\}/g, '<span style="color:#aaa;font-style:italic;">............</span>');
-  return content;
-}
-
-function vkProcessTemplatePrint(vanKhan, formData) {
-  let content = vanKhan.content;
-
-  if (formData.ngayDuong) {
-    const parts = formData.ngayDuong.split('-');
-    if (parts.length === 3) {
-      const ngayFormatted = vkFormatNgayAmLich(parts[2], parts[1], parts[0]);
-      content = content.replace(/\{\{ngayAmLich\}\}/g, '<strong>' + ngayFormatted + '</strong>');
-    }
-  }
-  if (formData.tenVo && formData.tenVo.trim()) {
-    content = content.replace(/\{\{tenVoSuffix\}\}/g, '<strong> cùng vợ là ' + formData.tenVo.trim() + '</strong>');
-  } else { content = content.replace(/\{\{tenVoSuffix\}\}/g, ''); }
-  if (formData.tenChong && formData.tenChong.trim()) {
-    content = content.replace(/\{\{tenChongSuffix\}\}/g, '<strong> cùng chồng là ' + formData.tenChong.trim() + '</strong>');
-  } else { content = content.replace(/\{\{tenChongSuffix\}\}/g, ''); }
-  if (formData.gioiTinhCon === 'Gái') { content = content.replace(/\{\{conLabel\}\}/g, 'con gái'); }
-  else { content = content.replace(/\{\{conLabel\}\}/g, 'con trai'); }
-  ['tenChuNha','tenChong','tenVo','tenCon','diaChi','diaChiMoi','tenOngBa','moiQuanHe','tenCuaHang','tenChua','bienSoXe','gioiTinhCon'].forEach(function(field) {
-    const regex = new RegExp('\\{\\{' + field + '\\}\\}', 'g');
-    const val = formData[field] ? formData[field].trim() : '';
-    if (val) { content = content.replace(regex, '<strong>' + val + '</strong>'); }
-    else { content = content.replace(regex, '............'); }
-  });
-  content = content.replace(/\{\{[^}]+\}\}/g, '............');
-  return content;
-}
-
 function vkShowPreview() {
-  const formData = vkGetFormData();
-  const html = vkProcessTemplate(vkCurrentVanKhan, formData);
+  var formData = vkGetFormData();
+  // Screen preview
+  var html = vkProcessTemplate(vkCurrentVanKhan, formData, false);
   document.getElementById('vk-preview-content').innerHTML = html;
-
-  const noteBox = document.getElementById('vk-note-box');
+  // Note box
+  var noteBox = document.getElementById('vk-note-box');
   if (vkCurrentVanKhan.note) {
-    noteBox.innerHTML = '<strong style="color:var(--gold2);">📋 Lễ vật chuẩn bị:</strong><br>' + vkCurrentVanKhan.note;
+    noteBox.innerHTML = '<strong>📋 Lễ vật chuẩn bị:</strong><br>' + vkCurrentVanKhan.note;
     noteBox.style.display = 'block';
   } else { noteBox.style.display = 'none'; }
-
-  // Build print area
-  const printHtml = vkProcessTemplatePrint(vkCurrentVanKhan, formData);
-  document.getElementById('vk-print-area').innerHTML = '<div class="vkprint-title">' + vkCurrentVanKhan.title + '</div>\n' + printHtml;
-
+  // Print area
+  var printHtml = vkProcessTemplate(vkCurrentVanKhan, formData, true);
+  document.getElementById('vk-print-area').innerHTML =
+    '<div class="vkprint-title">' + vkCurrentVanKhan.title + '</div>' + printHtml;
   vkSetStep(2);
 }
 
-function vkBackToForm() { vkSetStep(1); }
-
-function vkDoPrint() { window.print(); }
-
 function vkSetStep(n) {
-  document.getElementById('vk-step-form').style.display = n === 1 ? 'block' : 'none';
-  document.getElementById('vk-step-preview').style.display = n === 2 ? 'block' : 'none';
-
-  // Update step indicators
-  [1,2,3].forEach(function(i) {
-    const el = document.getElementById('vk-step-' + i);
+  document.getElementById('vk-step-form').style.display    = (n === 1) ? '' : 'none';
+  document.getElementById('vk-step-preview').style.display = (n === 2) ? '' : 'none';
+  [1,2,3].forEach(function(i){
+    var el = document.getElementById('vk-si-' + i);
     if (!el) return;
-    if (i === n) {
-      el.style.color = 'var(--red)';
-      el.style.borderBottomColor = 'var(--red)';
-      el.querySelector('span').style.background = 'var(--red)';
-      el.querySelector('span').style.color = '#fff';
-    } else if (i < n) {
-      el.style.color = 'var(--gold2)';
-      el.style.borderBottomColor = 'var(--gold2)';
-      el.querySelector('span').style.background = 'var(--gold2)';
-      el.querySelector('span').style.color = '#fff';
-    } else {
-      el.style.color = '#aaa';
-      el.style.borderBottomColor = 'transparent';
-      el.querySelector('span').style.background = '#e5e7eb';
-      el.querySelector('span').style.color = '#666';
-    }
+    el.className = 'vk-step' + (i === n ? ' vk-active' : (i < n ? ' vk-done' : ''));
   });
 }
 
-// Init Văn Khấn when section becomes visible
-function initVanKhan() {
-  if (document.getElementById('vk-cat-grid').children.length === 0) {
-    vkRenderCategoryBtns();
-    vkRenderCards();
-  }
-}
+function vkDoPrint() { window.print(); }
 
 
+
+// Patch showSection to init Văn Khấn
+var _origShowSection = showSection;
+showSection = function(name) {
+  _origShowSection.call(this, name);
+  if (name === 'vankhan') { setTimeout(initVanKhan, 50); }
+};
 
 window.onload = init;
 </script>
