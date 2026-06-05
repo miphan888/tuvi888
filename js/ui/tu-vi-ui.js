@@ -163,90 +163,120 @@ function _tvRenderMenhGrid(laSo) {
   container.innerHTML = html;
 }
 
-/* ============================================================
-   _tvRenderLaSo — Render lưới 12 cung 4x4
-   ============================================================ */
-function _tvRenderLaSo(laSo) {
-  var container = document.getElementById('tv-la-so-grid');
-  if (!container) return;
+// ══════════════════════════════════════════════════════
+// RENDER LÁ SỐ 12 CUNG (GRID 4x4) — FIXED
+// ══════════════════════════════════════════════════════
 
-  var cacCung  = laSo.cacCung;   /* mảng 12 cung từ engine, index 0-11 = Tý-Hợi */
+function tvRenderLaSo(laSo) {
+  var wrap = document.getElementById('tv-la-so-grid');
+  if (!wrap || !laSo || !laSo.cung) return;
 
-  /* Tạo 16 cell, 4 cell giữa là trung tâm */
-  /* Vị trí trung tâm: cell index 5,6,9,10 (4 cols) */
-  var centerCells = { 5: true, 6: true, 9: true, 10: true };
+  var CHI = ['Tý','Sửu','Dần','Mão','Thìn','Tỵ','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi'];
 
-  /* Map: cell position → cung index trong cacCung */
-  /* TV_CELL_POS[i] = vị trí cell của cung thứ i trong vòng ngoài */
-  /* TV_GRID_ORDER[i] = index cung tương ứng trong cacCung */
-  var cellToCung = {};
-  for (var gi = 0; gi < TV_CELL_POS.length; gi++) {
-    cellToCung[TV_CELL_POS[gi]] = TV_GRID_ORDER[gi];
+  // Vị trí 12 cung trong grid 4x4 (truyền thống)
+  // Row 1: Tỵ   Ngọ   Mùi   Thân
+  // Row 2: Thìn [---center---] Dậu
+  // Row 3: Mão  [---center---] Tuất
+  // Row 4: Dần  Sửu   Tý    Hợi
+  var gridMap = [
+    { chi: 5,  row: 1, col: 1 },  // Tỵ
+    { chi: 6,  row: 1, col: 2 },  // Ngọ
+    { chi: 7,  row: 1, col: 3 },  // Mùi
+    { chi: 8,  row: 1, col: 4 },  // Thân
+    { chi: 4,  row: 2, col: 1 },  // Thìn
+    { chi: 9,  row: 2, col: 4 },  // Dậu
+    { chi: 3,  row: 3, col: 1 },  // Mão
+    { chi: 10, row: 3, col: 4 },  // Tuất
+    { chi: 2,  row: 4, col: 1 },  // Dần
+    { chi: 1,  row: 4, col: 2 },  // Sửu
+    { chi: 0,  row: 4, col: 3 },  // Tý
+    { chi: 11, row: 4, col: 4 }   // Hợi
+  ];
+
+  // Tìm cung theo Địa Chi index
+  function timCung(chiIdx) {
+    for (var i = 0; i < laSo.cung.length; i++) {
+      var c = laSo.cung[i];
+      var cChi = c.diaChi;
+      if (typeof cChi === 'string') cChi = CHI.indexOf(cChi);
+      if (cChi === chiIdx) return { cung: c, idx: i };
+    }
+    return null;
   }
 
-  var html = '';
-  for (var ci = 0; ci < 16; ci++) {
-    if (centerCells[ci]) {
-      /* Ô trung tâm: hiện tên & mệnh chủ */
-      if (ci === 5) {
-        html +=
-          '<div class="tv-cung tv-cung-trung-tam" style="grid-column:span 2;grid-row:span 2;">' +
-            '<div class="tv-trung-tam-name">' + (laSo.hoTen || 'Lá Số') + '</div>' +
-            '<div class="tv-trung-tam-divider"></div>' +
-            '<div class="tv-trung-tam-info">Mệnh: ' + (laSo.menhHanh || '') + '</div>' +
-            '<div class="tv-trung-tam-info">' + (laSo.cucTen || '') + '</div>' +
-          '</div>';
-      }
-      /* ci 6, 9, 10 bỏ qua (đã dùng span) */
-      continue;
-    }
+  // Build grid
+  var html = '<div style="display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr);gap:4px;max-width:720px;margin:0 auto">';
 
-    var cungIdx = cellToCung[ci];
-    if (cungIdx === undefined) continue;
-    var cung = cacCung[cungIdx];
-    if (!cung) continue;
+  // Trung tâm (row 2-3, col 2-3)
+  html += '<div style="grid-column:2/4;grid-row:2/4;';
+  html += 'background:linear-gradient(135deg,#FDF6E3,#F5E6C8);';
+  html += 'border:1px solid var(--cream3);border-radius:8px;';
+  html += 'display:flex;flex-direction:column;align-items:center;justify-content:center;';
+  html += 'padding:16px;text-align:center">';
+  html += '<div style="font-family:Noto Serif,serif;font-size:20px;color:var(--red);font-weight:700;margin-bottom:6px">Lá Số Tử Vi</div>';
+  html += '<div style="font-size:13px;color:var(--ink2);margin-bottom:4px">' + (laSo.ten || '') + '</div>';
+  if (laSo.menh || laSo.menhChu) html += '<div style="font-family:Noto Serif,serif;font-size:14px;font-weight:700;color:var(--ink)">Mệnh: ' + (laSo.menh || laSo.menhChu || '') + '</div>';
+  if (laSo.cuc || laSo.tenCuc) html += '<div style="font-size:12px;color:var(--ink3)">Cục: <strong style="color:var(--red)">' + (laSo.cuc || laSo.tenCuc || '') + '</strong></div>';
+  if (laSo.nguHanhMenh || laSo.hanhMenh) html += '<div style="font-size:12px;color:var(--ink3);margin-top:2px">Ngũ Hành: <strong>' + (laSo.nguHanhMenh || laSo.hanhMenh || '') + '</strong></div>';
+  html += '</div>';
 
-    /* Xây HTML sao */
-    var saoHtml = '';
-    var saoList = cung.sao || [];
-    for (var si = 0; si < saoList.length && si < 8; si++) {
-      var sao = saoList[si];
-      var saoClass = 'tv-sao';
-      if (sao.loai === 'chinh-tinh' || sao.loai === 'chinh') {
-        saoClass += ' tv-sao-chinh-tinh';
-      } else if (sao.loai === 'phu-tinh' || sao.loai === 'phu') {
-        saoClass += ' tv-sao-phu-tinh';
-      } else if (sao.loai === 'tu-hoa') {
-        saoClass += ' tv-sao-cat';
+  // 12 cung
+  for (var g = 0; g < gridMap.length; g++) {
+    var gm = gridMap[g];
+    var found = timCung(gm.chi);
+    var cung = found ? found.cung : null;
+    var cungIdx = found ? found.idx : 0;
+
+    html += '<div style="grid-column:' + gm.col + ';grid-row:' + gm.row + ';';
+
+    if (cung) {
+      var tenCung = cung.ten || '—';
+      var diaChi = cung.diaChi;
+      if (typeof diaChi === 'number') diaChi = CHI[diaChi] || '?';
+      var saoArr = cung.sao || [];
+      var isMenh = (tenCung === 'Mệnh');
+      var isThan = (tenCung === 'Thân' || cung.isThan);
+
+      // Style
+      if (isMenh) {
+        html += 'border:2px solid var(--red);background:#FFF5F5;';
+      } else if (isThan) {
+        html += 'border:2px solid var(--gold);background:#FFFDF0;';
       } else {
-        saoClass += ' tv-sao-tap-tinh';
+        html += 'border:1px solid var(--border);background:#FFFDF5;';
       }
-      saoHtml += '<span class="' + saoClass + '">' + sao.ten + '</span>';
+      html += 'border-radius:5px;padding:7px;font-size:11px;min-height:120px;position:relative;cursor:pointer;overflow:hidden"';
+      html += ' onclick="tvMoCungPopup(' + cungIdx + ')"';
+      html += '>';
+
+      // Tên cung + Địa Chi
+      html += '<div style="font-size:10px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px">' + tenCung + '</div>';
+      html += '<div style="font-family:Noto Serif,serif;font-size:12px;font-weight:700;color:var(--ink3)">' + diaChi + '</div>';
+
+      // Badge
+      if (isMenh) html += '<span style="position:absolute;top:4px;right:4px;font-size:9px;padding:1px 5px;border-radius:3px;background:var(--red);color:#FFD700;font-weight:700">MỆNH</span>';
+      if (isThan) html += '<span style="position:absolute;top:4px;right:4px;font-size:9px;padding:1px 5px;border-radius:3px;background:var(--gold);color:#fff;font-weight:700">THÂN</span>';
+
+      // Sao
+      if (saoArr.length > 0) {
+        html += '<div style="margin-top:5px;display:flex;flex-wrap:wrap;gap:2px">';
+        for (var si = 0; si < saoArr.length; si++) {
+          html += '<span style="font-size:10px;font-weight:600;padding:1px 4px;border-radius:3px;white-space:nowrap;' + tvSaoStyle(saoArr[si]) + '">' + saoArr[si] + '</span>';
+        }
+        html += '</div>';
+      }
+
+    } else {
+      // Cung trống
+      html += 'border:1px solid var(--border);background:#FFFDF5;border-radius:5px;padding:7px;min-height:120px">';
+      html += '<div style="font-size:10px;color:var(--ink3)">' + CHI[gm.chi] + '</div>';
     }
-    if (saoList.length > 8) {
-      saoHtml += '<span class="tv-sao tv-sao-tap-tinh">+' + (saoList.length - 8) + '</span>';
-    }
 
-    /* Badge Mệnh / Thân */
-    var badgeHtml = '';
-    if (cung.laMenhCung) badgeHtml += '<span class="tv-cung-badge tv-badge-menh">Mệnh</span>';
-    if (cung.laThanCung) badgeHtml += '<span class="tv-cung-badge tv-badge-than">Thân</span>';
-
-    /* Tuần triệt */
-    var truietClass = cung.tuanKhong ? ' tv-cung-triet' : '';
-
-    html +=
-      '<div class="tv-cung' + truietClass + '" onclick="tvShowCungPopup(' + cungIdx + ')" style="cursor:pointer;">' +
-        badgeHtml +
-        '<div class="tv-cung-header">' +
-          '<span class="tv-cung-name">' + (cung.ten || TV_TEN_CUNG[cungIdx] || '') + '</span>' +
-          '<span class="tv-cung-chi">' + (cung.diaChi || '') + '</span>' +
-        '</div>' +
-        '<div class="tv-cung-sao">' + saoHtml + '</div>' +
-      '</div>';
+    html += '</div>';
   }
 
-  container.innerHTML = html;
+  html += '</div>';
+  wrap.innerHTML = html;
 }
 
 /* ============================================================
