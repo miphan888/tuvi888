@@ -112,86 +112,132 @@ function tuTruPhanTich() {
       return;
     }
 
-    // ═══ CHUẨN HÓA DỮ LIỆU ═══
+       // ═══ CHUẨN HÓA DỮ LIỆU ═══
     var CAN = ['Giáp','Ất','Bính','Đinh','Mậu','Kỷ','Canh','Tân','Nhâm','Quý'];
     var CHI = ['Tý','Sửu','Dần','Mão','Thìn','Tỵ','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi'];
     var NGU_HANH_CAN = ['Mộc','Mộc','Hỏa','Hỏa','Thổ','Thổ','Kim','Kim','Thủy','Thủy'];
     var NGU_HANH_CHI = ['Thủy','Thổ','Mộc','Mộc','Thổ','Hỏa','Hỏa','Thổ','Kim','Kim','Thổ','Thủy'];
 
-    if (!data.tuTru) {
-      var cN = 0, cT = 0, cNg = 0, cGi = 0;
-      var zN = 0, zT = 0, zNg = 0, zGi = 0;
+    // Kiểm tra engine trả về có đủ dữ liệu không
+    // Nếu thiếu (nam/ngay rỗng) → tự tính lại
+    var engineOK = true;
+    if (data.nam && !data.nam.can && !data.nam.canStr) engineOK = false;
+    if (data.ngay && !data.ngay.can && !data.ngay.canStr) engineOK = false;
+    if (data.tuTru) {
+      if (data.tuTru.nam && !data.tuTru.nam.can && !data.tuTru.nam.canStr) engineOK = false;
+      if (data.tuTru.ngay && !data.tuTru.ngay.can && !data.tuTru.ngay.canStr) engineOK = false;
+    }
 
-      if (data.canNam !== undefined) {
-        cN = data.canNam; zN = data.chiNam;
-        cT = data.canThang; zT = data.chiThang;
-        cNg = data.canNgay; zNg = data.chiNgay;
-        cGi = data.canGio || 0; zGi = data.chiGio || 0;
-      } else if (data.nam && typeof data.nam === 'object') {
-        cN = data.nam.can || 0; zN = data.nam.chi || 0;
-        cT = (data.thang && data.thang.can) || 0; zT = (data.thang && data.thang.chi) || 0;
-        cNg = (data.ngay && data.ngay.can) || 0; zNg = (data.ngay && data.ngay.chi) || 0;
-        cGi = (data.gio && data.gio.can) || 0; zGi = (data.gio && data.gio.chi) || 0;
-      } else if (data.yearPillar) {
-        cN = data.yearPillar.can || 0; zN = data.yearPillar.chi || 0;
-        cT = data.monthPillar ? data.monthPillar.can || 0 : 0;
-        zT = data.monthPillar ? data.monthPillar.chi || 0 : 0;
-        cNg = data.dayPillar ? data.dayPillar.can || 0 : 0;
-        zNg = data.dayPillar ? data.dayPillar.chi || 0 : 0;
-        cGi = data.hourPillar ? data.hourPillar.can || 0 : 0;
-        zGi = data.hourPillar ? data.hourPillar.chi || 0 : 0;
+    // Engine trả thiếu → dùng fallback tự tính
+    if (!engineOK) {
+      console.log('[TuTru] Engine trả thiếu dữ liệu, dùng fallback');
+      var fallback = tuTruTuTinh(day, month, year, gio, tz);
+      if (fallback) data = fallback;
+    }
+
+    // Chuẩn hóa: nếu data có nam/thang/ngay/gio trực tiếp (không bọc trong tuTru)
+    if (!data.tuTru && (data.nam || data.thang || data.ngay || data.gio)) {
+      var rawKeys = ['nam', 'thang', 'ngay', 'gio'];
+      var newTuTru = {};
+
+      for (var ri = 0; ri < rawKeys.length; ri++) {
+        var rk = rawKeys[ri];
+        var raw = data[rk];
+        if (!raw) { raw = {}; }
+
+        // Xác định can index
+        var canIdx = -1;
+        if (typeof raw.can === 'number') {
+          canIdx = raw.can;
+        } else if (typeof raw.can === 'string' && raw.can) {
+          canIdx = CAN.indexOf(raw.can);
+        } else if (typeof raw.canStr === 'string' && raw.canStr) {
+          canIdx = CAN.indexOf(raw.canStr);
+        }
+
+        // Xác định chi index
+        var chiIdx = -1;
+        if (typeof raw.chi === 'number') {
+          chiIdx = raw.chi;
+        } else if (typeof raw.chi === 'string' && raw.chi) {
+          chiIdx = CHI.indexOf(raw.chi);
+        } else if (typeof raw.chiStr === 'string' && raw.chiStr) {
+          chiIdx = CHI.indexOf(raw.chiStr);
+        }
+
+        // Nếu vẫn không có → bỏ qua (fallback đã xử lý)
+        if (canIdx < 0) canIdx = 0;
+        if (chiIdx < 0) chiIdx = 0;
+
+        // Ngũ hành — lấy từ nguHanh hoặc hanh hoặc tự tính
+        var hanh = raw.nguHanh || raw.hanh || '';
+        if (!hanh && canIdx >= 0) hanh = NGU_HANH_CAN[canIdx] || '';
+
+        // Nạp Âm
+        var napAm = raw.napAm || '';
+        if (!napAm && typeof getNapAmCanChi === 'function') {
+          napAm = getNapAmCanChi(canIdx, chiIdx) || '';
+        }
+
+        newTuTru[rk] = {
+          can: canIdx,
+          chi: chiIdx,
+          canStr: CAN[canIdx] || '?',
+          chiStr: CHI[chiIdx] || '?',
+          hanh: hanh,
+          napAm: napAm
+        };
       }
 
-      // String → index
-      if (typeof cN === 'string') cN = CAN.indexOf(cN);
-      if (typeof zN === 'string') zN = CHI.indexOf(zN);
-      if (typeof cT === 'string') cT = CAN.indexOf(cT);
-      if (typeof zT === 'string') zT = CHI.indexOf(zT);
-      if (typeof cNg === 'string') cNg = CAN.indexOf(cNg);
-      if (typeof zNg === 'string') zNg = CHI.indexOf(zNg);
-      if (typeof cGi === 'string') cGi = CAN.indexOf(cGi);
-      if (typeof zGi === 'string') zGi = CHI.indexOf(zGi);
+      data.tuTru = newTuTru;
+    }
 
-      cN = ((cN || 0) + 10) % 10; zN = ((zN || 0) + 12) % 12;
-      cT = ((cT || 0) + 10) % 10; zT = ((zT || 0) + 12) % 12;
-      cNg = ((cNg || 0) + 10) % 10; zNg = ((zNg || 0) + 12) % 12;
-      cGi = ((cGi || 0) + 10) % 10; zGi = ((zGi || 0) + 12) % 12;
-
-      var napAmFunc = (typeof getNapAmCanChi === 'function') ? getNapAmCanChi : null;
-      var naNam = napAmFunc ? napAmFunc(cN, zN) || '' : '';
-      var naThang = napAmFunc ? napAmFunc(cT, zT) || '' : '';
-      var naNgay = napAmFunc ? napAmFunc(cNg, zNg) || '' : '';
-      var naGio = napAmFunc ? napAmFunc(cGi, zGi) || '' : '';
-
-      data.tuTru = {
-        nam:   { can: cN, chi: zN, canStr: CAN[cN], chiStr: CHI[zN], hanh: NGU_HANH_CAN[cN], napAm: naNam },
-        thang: { can: cT, chi: zT, canStr: CAN[cT], chiStr: CHI[zT], hanh: NGU_HANH_CAN[cT], napAm: naThang },
-        ngay:  { can: cNg, chi: zNg, canStr: CAN[cNg], chiStr: CHI[zNg], hanh: NGU_HANH_CAN[cNg], napAm: naNgay },
-        gio:   { can: cGi, chi: zGi, canStr: CAN[cGi], chiStr: CHI[zGi], hanh: NGU_HANH_CAN[cGi], napAm: naGio }
-      };
-    } else {
+    // Nếu đã có data.tuTru, bổ sung field thiếu
+    if (data.tuTru) {
       var kk = ['nam', 'thang', 'ngay', 'gio'];
       for (var ki = 0; ki < kk.length; ki++) {
         var tr = data.tuTru[kk[ki]];
         if (!tr) continue;
-        if (!tr.canStr && typeof tr.can === 'number') tr.canStr = CAN[tr.can];
-        if (!tr.chiStr && typeof tr.chi === 'number') tr.chiStr = CHI[tr.chi];
-        if (!tr.hanh && typeof tr.can === 'number') tr.hanh = NGU_HANH_CAN[tr.can];
+
+        // can: string → index
+        if (typeof tr.can === 'string') {
+          tr.canStr = tr.can;
+          tr.can = CAN.indexOf(tr.can);
+          if (tr.can < 0) tr.can = 0;
+        }
+        // chi: string → index
+        if (typeof tr.chi === 'string') {
+          tr.chiStr = tr.chi;
+          tr.chi = CHI.indexOf(tr.chi);
+          if (tr.chi < 0) tr.chi = 0;
+        }
+
+        // Bổ sung canStr/chiStr nếu thiếu
+        if (!tr.canStr && typeof tr.can === 'number') tr.canStr = CAN[tr.can] || '?';
+        if (!tr.chiStr && typeof tr.chi === 'number') tr.chiStr = CHI[tr.chi] || '?';
+
+        // hanh từ nguHanh hoặc tự tính
+        if (!tr.hanh) tr.hanh = tr.nguHanh || '';
+        if (!tr.hanh && typeof tr.can === 'number') tr.hanh = NGU_HANH_CAN[tr.can] || '';
+
+        // napAm
         if (!tr.napAm && typeof tr.can === 'number' && typeof getNapAmCanChi === 'function') {
           tr.napAm = getNapAmCanChi(tr.can, tr.chi) || '';
         }
       }
     }
 
-    if (!data.nhatChu) data.nhatChu = data.tuTru.ngay;
+    // Đảm bảo có nhatChu
+    if (!data.nhatChu && data.tuTru) data.nhatChu = data.tuTru.ngay;
 
-    if (!data.nguHanh) {
+    // Đảm bảo có nguHanh
+    if (!data.nguHanh && data.tuTru) {
       var dem = { 'Kim': 0, 'Mộc': 0, 'Thủy': 0, 'Hỏa': 0, 'Thổ': 0 };
       var k4 = ['nam', 'thang', 'ngay', 'gio'];
       for (var di = 0; di < k4.length; di++) {
         var tru2 = data.tuTru[k4[di]];
         if (!tru2) continue;
-        var hC = (typeof tru2.can === 'number') ? NGU_HANH_CAN[tru2.can] : tru2.hanh;
+        var hC = (typeof tru2.can === 'number') ? NGU_HANH_CAN[tru2.can] : (tru2.hanh || '');
         var hZ = (typeof tru2.chi === 'number') ? NGU_HANH_CHI[tru2.chi] : '';
         if (hC && dem[hC] !== undefined) dem[hC]++;
         if (hZ && dem[hZ] !== undefined) dem[hZ]++;
