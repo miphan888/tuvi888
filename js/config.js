@@ -5,7 +5,7 @@
 
 var APP_CONFIG = {
   /* ---- Gemini API ---- */
-  GEMINI_API_KEY: 'AQ.Ab8RN6IJ02QfvigeMedh3ILK9JEZbapMQJUc8vNHQotACeXSbQ',
+  GEMINI_API_KEY: 'AQ.Ab8RN6JXjN8Zh-Kt-YLeLyu2EWwUkeRzF68wfDI5eOO4GpgV-A',
   GEMINI_MODEL: 'gemini-2.0-flash',
   GEMINI_ENDPOINT: 'https://generativelanguage.googleapis.com/v1beta/models/',
 
