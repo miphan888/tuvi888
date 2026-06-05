@@ -252,7 +252,7 @@ var CHINH_TINH_DATA = {
     }
   },
 
-  '  'Thiên Lương': {
+  'Thiên Lương': {
     nguHanh: 'Mộc',
     loai: 'Thọ Tinh',
     dacTinh: 'Sao chủ về tuổi thọ, đạo đức, từ bi, y học. Người Thiên Lương nhân hậu, thích giúp đỡ, có duyên tôn giáo.',
