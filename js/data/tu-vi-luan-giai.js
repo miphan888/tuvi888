@@ -177,3 +177,214 @@ function cungMenhDiaChi(ls){
   }
   return-1;
 }
+// ══════════════════════════════════════════════════════
+// PHẦN BỔ SUNG: NÂNG CẤP CHUYÊN GIA — Tử Vi Đẩu Số
+// Bổ sung vào tu-vi-luan-giai.js
+// ══════════════════════════════════════════════════════
+
+// ── BỔ SUNG CÁCH CỤC MỚI ──────────────────────────────
+
+// Thêm vào Thượng Cách
+CACH_CUC.thuongCach.push(
+  {ten:'Tử Vi Triều Viên',dieuKien:function(ls){
+    if(!ls||!cungCo(ls,'Mệnh',['Tử Vi']))return false;
+    var mv=saoMieuVuong(ls,'Tử Vi');if(mv<4)return false;
+    return tamPhuongCo(ls,'Mệnh',['Tả Phụ'])||tamPhuongCo(ls,'Mệnh',['Hữu Bật'])||
+           tamPhuongCo(ls,'Mệnh',['Văn Xương'])||tamPhuongCo(ls,'Mệnh',['Văn Khúc']);
+  },moTa:'Tử Vi Miếu tọa Mệnh có Tả Hữu Xương Khúc hội chiếu. Đế tinh sáng rực, văn võ song toàn.',danhGia:'Thượng Cách: Đế vương phong độ'},
+  {ten:'Thiên Phủ Triều Viên',dieuKien:function(ls){
+    return ls&&cungCo(ls,'Mệnh',['Thiên Phủ'])&&saoMieuVuong(ls,'Thiên Phủ')>=4;
+  },moTa:'Thiên Phủ Miếu tọa Mệnh. Kho lộc sáng rực, phú quý bền vững.',danhGia:'Thượng Cách: Phú quý bền lâu'},
+  {ten:'Song Lộc Triều Viên',dieuKien:function(ls){
+    return ls&&tamPhuongCo(ls,'Mệnh',['Lộc Tồn'])&&tamPhuongCo(ls,'Mệnh',['Hóa Lộc']);
+  },moTa:'Lộc Tồn và Hóa Lộc cùng hội chiếu tam phương Mệnh. Song lộc tụ về, đại phú.',danhGia:'Thượng Cách: Song lộc đại phú'},
+  {ten:'Tam Kỳ Gia Hội',dieuKien:function(ls){
+    return ls&&tamPhuongCo(ls,'Mệnh',['Hóa Lộc'])&&tamPhuongCo(ls,'Mệnh',['Hóa Quyền'])&&tamPhuongCo(ls,'Mệnh',['Hóa Khoa']);
+  },moTa:'Hóa Lộc, Hóa Quyền, Hóa Khoa cùng hội chiếu tam phương Mệnh. Phúc — Quyền — Danh đều đủ.',danhGia:'Thượng Cách: Phúc Quyền Danh tam toàn'},
+  {ten:'Lộc Mã Giao Trì',dieuKien:function(ls){
+    return ls&&((cungCo(ls,'Mệnh',['Lộc Tồn'])&&cungCo(ls,'Mệnh',['Thiên Mã']))||
+               (tamPhuongCo(ls,'Mệnh',['Lộc Tồn'])&&tamPhuongCo(ls,'Mệnh',['Thiên Mã'])));
+  },moTa:'Lộc Tồn và Thiên Mã gặp nhau ở Mệnh hoặc tam phương. Tài lộc theo bước chân, giàu nhờ di chuyển.',danhGia:'Thượng Cách: Lộc Mã tài phú'},
+  {ten:'Nhật Xuất Lâm Môn',dieuKien:function(ls){
+    if(!ls||!ls.cung)return false;
+    for(var i=0;i<ls.cung.length;i++){
+      if(ls.cung[i].ten==='Mệnh'){
+        var dc=ls.cung[i].diaChi;
+        var CHI=['Tý','Sửu','Dần','Mão','Thìn','Tỵ','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi'];
+        if(typeof dc==='string')dc=CHI.indexOf(dc);
+        if(dc===3){// Mão
+          var sa=ls.cung[i].sao||[];
+          for(var j=0;j<sa.length;j++){if(sa[j]==='Thái Dương')return true;}
+        }
+      }
+    }
+    return false;
+  },moTa:'Thái Dương Miếu tại cung Mão trong Mệnh. Mặt trời vừa mọc, rực rỡ tươi sáng nhất.',danhGia:'Thượng Cách: Nhật Xuất Lâm Môn đại quý'},
+  {ten:'Nguyệt Lãng Thiên Môn',dieuKien:function(ls){
+    if(!ls||!ls.cung)return false;
+    for(var i=0;i<ls.cung.length;i++){
+      if(ls.cung[i].ten==='Mệnh'){
+        var dc=ls.cung[i].diaChi;
+        var CHI=['Tý','Sửu','Dần','Mão','Thìn','Tỵ','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi'];
+        if(typeof dc==='string')dc=CHI.indexOf(dc);
+        if(dc===11){// Hợi
+          var sa=ls.cung[i].sao||[];
+          for(var j=0;j<sa.length;j++){if(sa[j]==='Thái Âm')return true;}
+        }
+      }
+    }
+    return false;
+  },moTa:'Thái Âm Miếu tại cung Hợi trong Mệnh. Trăng sáng trên thiên môn, phú quý song toàn.',danhGia:'Thượng Cách: Nguyệt Lãng Thiên Môn đại quý'},
+  {ten:'Minh Châu Xuất Hải',dieuKien:function(ls){
+    if(!ls||!ls.cung)return false;
+    for(var i=0;i<ls.cung.length;i++){
+      if(ls.cung[i].ten==='Mệnh'){
+        var dc=ls.cung[i].diaChi;
+        var CHI=['Tý','Sửu','Dần','Mão','Thìn','Tỵ','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi'];
+        if(typeof dc==='string')dc=CHI.indexOf(dc);
+        if(dc===7){// Mùi
+          var sa=ls.cung[i].sao||[];
+          for(var j=0;j<sa.length;j++){if(sa[j]==='Thái Dương')return true;}
+        }
+      }
+    }
+    return false;
+  },moTa:'Thái Dương Miếu tại cung Mùi trong Mệnh. Ngọc sáng xuất từ biển, phú quý hiển đạt.',danhGia:'Thượng Cách: Minh Châu Xuất Hải'}
+);
+
+// Thêm vào Trung Cách
+CACH_CUC.trungCach.push(
+  {ten:'Tử Sát Đồng Cung',dieuKien:function(ls){
+    return ls&&cungCo(ls,'Mệnh',['Tử Vi','Thất Sát']);
+  },moTa:'Tử Vi và Thất Sát cùng tọa Mệnh. Uy quyền cực đại nhưng cô độc, đường đời nhiều sóng gió.',danhGia:'Trung Cách: Uy quyền cô độc'},
+  {ten:'Cơ Lương Đồng Cung',dieuKien:function(ls){
+    return ls&&cungCo(ls,'Mệnh',['Thiên Cơ','Thiên Lương']);
+  },moTa:'Thiên Cơ và Thiên Lương đồng cung Mệnh. Thông minh đạo đức, hay lo nghĩ, hợp đạo học.',danhGia:'Trung Cách: Mưu lược đạo đức'},
+  {ten:'Đồng Lương Đồng Cung',dieuKien:function(ls){
+    return ls&&cungCo(ls,'Mệnh',['Thiên Đồng','Thiên Lương']);
+  },moTa:'Thiên Đồng và Thiên Lương đồng cung Mệnh. Phúc thọ đủ đầy nhưng dễ lười biếng, ỷ lại.',danhGia:'Trung Cách: Phúc thọ nhưng đủ thôi'},
+  {ten:'Tử Tham Đồng Cung',dieuKien:function(ls){
+    return ls&&cungCo(ls,'Mệnh',['Tử Vi','Tham Lang']);
+  },moTa:'Tử Vi và Tham Lang đồng cung Mệnh. Quyền lực gặp đào hoa, tài năng nhưng phong lưu đa tình.',danhGia:'Trung Cách: Quyền lực phong lưu'},
+  {ten:'Nhật Nguyệt Phản Bối Nam Đẩu',dieuKien:function(ls){
+    if(!ls)return false;
+    var duongHam=saoMieuVuong(ls,'Thái Dương')<=2;
+    var amSang=saoMieuVuong(ls,'Thái Âm')>=4;
+    return duongHam&&amSang;
+  },moTa:'Thái Dương tối hãm, Thái Âm sáng rực. Âm thịnh dương suy, đàn ông vất vả, đàn bà mạnh.',danhGia:'Trung Cách: Âm thịnh dương suy'}
+);
+
+// Thêm vào Hạ Cách
+CACH_CUC.haCach.push(
+  {ten:'Tham Liêm Hãm Địa',dieuKien:function(ls){
+    return ls&&cungCo(ls,'Mệnh',['Tham Lang','Liêm Trinh'])&&
+           saoMieuVuong(ls,'Tham Lang')<=2&&saoMieuVuong(ls,'Liêm Trinh')<=2;
+  },moTa:'Tham Lang và Liêm Trinh cùng Hãm tọa Mệnh. Đam mê quá độ, dễ sa đọa, tù tội.',danhGia:'Hạ Cách: Sa đọa tù tội'},
+  {ten:'Hỏa Linh Giáp Mệnh',dieuKien:function(ls){
+    return ls&&cungLanCanCo(ls,'Mệnh','Hỏa Tinh')&&cungLanCanCo(ls,'Mệnh','Linh Tinh');
+  },moTa:'Hỏa Tinh và Linh Tinh kẹp hai bên Mệnh. Song hỏa bao vây, nóng nảy bạo phát, tai nạn lửa.',danhGia:'Hạ Cách: Song hỏa bao vây'},
+  {ten:'Không Kiếp Đồng Cung Mệnh',dieuKien:function(ls){
+    return ls&&cungCo(ls,'Mệnh',['Địa Không','Địa Kiếp']);
+  },moTa:'Địa Không và Địa Kiếp cùng tọa cung Mệnh. Hao tán cực nặng, kiếp nạn liên miên.',danhGia:'Hạ Cách: Song hao cực nặng'},
+  {ten:'Thất Sát Hãm Mệnh',dieuKien:function(ls){
+    return ls&&cungCo(ls,'Mệnh',['Thất Sát'])&&saoMieuVuong(ls,'Thất Sát')<=2;
+  },moTa:'Thất Sát Hãm Địa tọa Mệnh. Sát tinh không Miếu, tàn bạo hung hãn, tai nạn, kiện tụng.',danhGia:'Hạ Cách: Hung sát hãm địa'},
+  {ten:'Phá Quân Hãm Mệnh',dieuKien:function(ls){
+    return ls&&cungCo(ls,'Mệnh',['Phá Quân'])&&saoMieuVuong(ls,'Phá Quân')<=2;
+  },moTa:'Phá Quân Hãm Địa tọa Mệnh. Phá cách không hướng, đời nhiều biến động, phá tán, bất ổn.',danhGia:'Hạ Cách: Phá cách hãm địa'}
+);
+
+// ── BẢNG TỔ HỢP SAO ĐẶC BIỆT ─────────────────────────
+var TO_HOP_SAO = [
+  {ten:'Tử Phủ',sao:['Tử Vi','Thiên Phủ'],moTa:'Đế tinh gặp Lộc tinh, quyền quý song toàn, phú quý vẹn đôi.',tot:true},
+  {ten:'Tử Tham',sao:['Tử Vi','Tham Lang'],moTa:'Quyền lực gặp đào hoa, tài năng xuất chúng nhưng đa tình phong lưu.',tot:true},
+  {ten:'Tử Sát',sao:['Tử Vi','Thất Sát'],moTa:'Uy quyền cực đại, tính cách mạnh mẽ quyết đoán, nhưng cô độc.',tot:true},
+  {ten:'Tử Phá',sao:['Tử Vi','Phá Quân'],moTa:'Quyền lực gặp phá cách, tính cải cách mạnh mẽ, khai phá tiên phong.',tot:true},
+  {ten:'Vũ Tham',sao:['Vũ Khúc','Tham Lang'],moTa:'Tài tinh gặp đào hoa tinh, giỏi kinh doanh giải trí và ngoại giao.',tot:true},
+  {ten:'Vũ Sát',sao:['Vũ Khúc','Thất Sát'],moTa:'Tài tinh gặp sát tinh, kiếm tiền bạo nhưng nhiều rủi ro biến động.',tot:false},
+  {ten:'Vũ Phá',sao:['Vũ Khúc','Phá Quân'],moTa:'Tài chính biến động lớn, có thể phá sản rồi xây dựng lại từ đầu.',tot:false},
+  {ten:'Liêm Tham',sao:['Liêm Trinh','Tham Lang'],moTa:'Đam mê gặp dục vọng. Miếu: nghệ sĩ tài hoa. Hãm: sa đọa dễ tù tội.',tot:false},
+  {ten:'Liêm Sát',sao:['Liêm Trinh','Thất Sát'],moTa:'Chính trực gặp sát phạt, hợp ngành luật, quan tòa, cảnh sát.',tot:true},
+  {ten:'Liêm Phá',sao:['Liêm Trinh','Phá Quân'],moTa:'Chính trực gặp phá cách, cải cách triệt để, đời nhiều biến động.',tot:false},
+  {ten:'Cơ Cự',sao:['Thiên Cơ','Cự Môn'],moTa:'Mưu trí gặp khẩu tài, giỏi tranh luận thuyết phục, hợp luật sư biện hộ.',tot:true},
+  {ten:'Đồng Cự',sao:['Thiên Đồng','Cự Môn'],moTa:'Hiền lành gặp thị phi, hay bị oan uổng, miệng lưỡi gây họa.',tot:false},
+  {ten:'Nhật Nguyệt',sao:['Thái Dương','Thái Âm'],moTa:'Âm dương hòa hợp, phú quý song toàn nếu cả hai đều sáng Miếu.',tot:true},
+  {ten:'Xương Khúc',sao:['Văn Xương','Văn Khúc'],moTa:'Song văn tinh tụ hội, tài hoa xuất chúng, học vấn cao thâm.',tot:true},
+  {ten:'Tả Hữu',sao:['Tả Phụ','Hữu Bật'],moTa:'Song phò tá tụ hội, quý nhân phò trì hai bên, sự nghiệp hanh thông.',tot:true},
+  {ten:'Không Kiếp',sao:['Địa Không','Địa Kiếp'],moTa:'Song hao tinh hội tụ, tài sản hao tán cực nặng, kiếp nạn liên miên.',tot:false},
+  {ten:'Kình Đà',sao:['Kình Dương','Đà La'],moTa:'Song sát tinh, xung đột nội ngoại, khó khăn chồng chất không ngừng.',tot:false},
+  {ten:'Hỏa Linh',sao:['Hỏa Tinh','Linh Tinh'],moTa:'Song hỏa tinh hội tụ, nóng nảy bộc phát, tai nạn lửa, thị phi.',tot:false},
+  {ten:'Lộc Mã',sao:['Lộc Tồn','Thiên Mã'],moTa:'Lộc Mã giao trì, tài lộc dồi dào nhờ di chuyển xuất ngoại.',tot:true}
+];
+
+// ── BẢNG LUẬN THEO GIỚI TÍNH ──────────────────────────
+var LUAN_GIOI_TINH = {
+  'Thái Dương': {
+    nam: 'Thái Dương đại diện cho bản thân người nam. Miếu Vượng: sự nghiệp hanh thông, danh tiếng lớn, được nhiều người kính trọng. Hãm Địa: vất vả bươn chải, tiêu hao sức lực nhiều.',
+    nu: 'Thái Dương đại diện cho chồng và cha trong lá số nữ. Miếu Vượng: chồng tài giỏi, cha nghiêm từ. Hãm Địa: chồng bất tài hoặc chồng hay vắng nhà, cha mất sớm hoặc xa cách.'
+  },
+  'Thái Âm': {
+    nam: 'Thái Âm đại diện cho vợ và mẹ trong lá số nam. Miếu Vượng: vợ đẹp người giỏi, mẹ hiền phúc hậu. Hãm Địa: tình duyên lận đận, vợ hay buồn lo hoặc sức khỏe kém.',
+    nu: 'Thái Âm đại diện cho bản thân người nữ. Miếu Vượng: nhan sắc tốt, giàu có phú quý. Hãm Địa: hay u buồn, sức khỏe yếu đuối, nữ tính nhưng thiếu nghị lực.'
+  },
+  'Tham Lang': {
+    nam: 'Nam có Tham Lang: đa tài đa dục, nhiều mối quan hệ xã hội, duyên tình rộng. Miếu: giỏi giao tiếp, sự nghiệp giải trí. Hãm: ham chơi, đa tình, khó chuyên tâm.',
+    nu: 'Nữ có Tham Lang: sắc sảo quyến rũ, đa tài nghệ thuật. Miếu: rất hấp dẫn, thành công trong giải trí. Hãm: tình duyên phức tạp, dễ bị nhiều người theo đuổi gây rắc rối.'
+  },
+  'Thất Sát': {
+    nam: 'Nam có Thất Sát: phong cách tướng quân, quyết đoán mạnh mẽ, doanh nhân có bản lĩnh. Miếu: uy quyền lớn. Hãm: hung hãn, tự làm khó mình.',
+    nu: 'Nữ có Thất Sát: tính cách mạnh mẽ độc lập, không chịu phụ thuộc. Hôn nhân khó thuận vì cá tính quá mạnh. Miếu: lãnh đạo giỏi, thành công. Hãm: hôn nhân đổ vỡ.'
+  },
+  'Phá Quân': {
+    nam: 'Nam có Phá Quân: tinh thần khai phá tiên phong, dám nghĩ dám làm, đời nhiều sóng gió nhưng cũng nhiều cơ hội lớn. Miếu: nhà cách mạng, doanh nhân startup.',
+    nu: 'Nữ có Phá Quân: cá tính mạnh, không thích bị ràng buộc, khó tìm người hợp tính. Miếu: phụ nữ độc lập tài năng. Hãm: hôn nhân nhiều biến động, ly hôn cao.'
+  }
+};
+
+// ── BẢNG SAO TƯƠNG TÁC ────────────────────────────────
+var SAO_TUONG_TAC = {
+  'Tử Vi+Tả Phụ': 'Quân Thần Khánh Hội — Vua có bầy tôi phò tá, đại cát cho sự nghiệp lãnh đạo.',
+  'Tử Vi+Hữu Bật': 'Quân Thần Khánh Hội — Đế tinh có phò tá, quyền lực được hỗ trợ đắc lực.',
+  'Tử Vi+Kình Dương': 'Đế tinh gặp sát tinh — uy quyền rất lớn nhưng tính cô độc, hay đối đầu người khác.',
+  'Tử Vi+Hóa Kỵ': 'Đế tinh gặp Kỵ — quyền lực bị cản trở, dễ mang tiếng thị phi, oan khuất.',
+  'Tử Vi+Hóa Lộc': 'Đế tinh gặp Lộc — quyền lực đi kèm tài lộc, vừa giàu vừa sang.',
+  'Vũ Khúc+Hóa Lộc': 'Tài tinh Hóa Lộc — đại phú, tiền tài dồi dào, tài chính vô cùng thuận lợi.',
+  'Vũ Khúc+Hóa Kỵ': 'Tài tinh gặp Kỵ — tài chính trắc trở, tiền đến rồi đi, khó giữ của.',
+  'Tham Lang+Hỏa Tinh': 'Hỏa Tham Cách — đột phát bất ngờ giàu có, tài lộc đến nhanh và sớm.',
+  'Tham Lang+Linh Tinh': 'Linh Tham Cách — phát triển dần rồi bùng phát mạnh, thường phát muộn.',
+  'Thất Sát+Kình Dương': 'Song sát tương phùng — cực hung nếu hãm, nhưng cực quý nếu cả hai Miếu Vượng.',
+  'Thái Dương+Cự Môn': 'Nhật chiếu Cự Môn — mặt trời soi sáng thị phi, hóa giải oan uổng, nổi tiếng nhờ ăn nói.',
+  'Văn Xương+Hóa Kỵ': 'Văn tinh gặp Kỵ — thi cử trắc trở, văn chương bị phủ nhận, dễ sai lầm ngôn từ.',
+  'Văn Khúc+Hóa Kỵ': 'Văn tinh gặp Kỵ — nghệ thuật gặp trở ngại, dễ bị hiểu nhầm, ngôn từ gây họa.',
+  'Lộc Tồn+Thiên Mã': 'Lộc Mã Giao Trì — tài lộc lớn nhờ di chuyển, xuất ngoại mang lại phú quý.',
+  'Địa Không+Địa Kiếp': 'Song hao tinh — tài sản hao tán nghiêm trọng, tiền vào rồi ra nhanh.',
+  'Hóa Lộc+Hóa Kỵ': 'Lộc Kỵ giao nhau — vừa có tài lộc vừa có trở ngại, được rồi mất, mất rồi được.',
+  'Kình Dương+Đà La': 'Kình Đà cùng cung — song sát cực nặng, xung đột bên trong lẫn bên ngoài.',
+  'Hỏa Tinh+Linh Tinh': 'Song hỏa tụ hội — nóng nảy bộc phát cực mạnh, tai nạn hỏa hoạn, thị phi.',
+  'Thiên Mã+Hóa Kỵ': 'Mã gặp Kỵ — đi đây đó nhiều nhưng gặp trở ngại, hành trình gian nan.',
+  'Tả Phụ+Hữu Bật': 'Song phò tá hội tụ — quý nhân rất nhiều, sự nghiệp được hỗ trợ từ nhiều phía.',
+  'Thiên Phủ+Hóa Lộc': 'Kho tàng gặp Lộc — tài sản vô cùng dồi dào, phú quý bền vững lâu dài.',
+  'Thiên Lương+Hóa Lộc': 'Thọ tinh gặp Lộc — phúc thọ song toàn, hưởng lộc trọn đời.',
+  'Liêm Trinh+Hóa Kỵ': 'Tù tinh gặp Kỵ — rất hung, dễ dính líu pháp luật, hình tụng kiện tụng.',
+  'Cự Môn+Hóa Kỵ': 'Ám tinh gặp Kỵ — thị phi cực nặng, khẩu thiệt gây họa lớn, cẩn thận lời nói.'
+};
+
+// ── HÀM HELPER: TÌM CHỈ SỐ CUNG ──────────────────────
+function _timChiSoCung(ls, tenCung) {
+  if (!ls || !ls.cung) return -1;
+  for (var i = 0; i < ls.cung.length; i++) {
+    if (ls.cung[i].ten === tenCung) return i;
+  }
+  return -1;
+}
+
+// ── HÀM HELPER: LẤY SAO CỦA CUNG THEO CHỈ SỐ ─────────
+function _laySaoTheoIdx(ls, idx) {
+  if (!ls || !ls.cung || idx < 0 || idx >= ls.cung.length) return [];
+  var sao = ls.cung[idx].sao || [];
+  var result = [];
+  for (var i = 0; i < sao.length; i++) {
+    result.push(typeof sao[i] === 'string' ? sao[i] : (sao[i].ten || ''));
+  }
+  return result;
+}
