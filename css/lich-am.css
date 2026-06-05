@@ -1,0 +1,592 @@
+/* ============================================================
+   lich-am.css — Styles cho module Lịch Âm Dương
+   Lịch Việt Nam 888
+   Match CSS variables từ base.css
+   ============================================================ */
+
+/* ===========================================================
+   HERO BANNER LỊCH ÂM
+   =========================================================== */
+.la-hero {
+  background: linear-gradient(135deg, var(--ink) 0%, var(--red) 45%, var(--gold) 100%);
+  border-radius: var(--r-xl);
+  padding: var(--sp-xl) var(--sp-lg);
+  text-align: center;
+  margin-bottom: var(--sp-xl);
+  position: relative;
+  overflow: hidden;
+}
+
+.la-hero::before,
+.la-hero::after {
+  content: '☽';
+  position: absolute;
+  font-size: 6rem;
+  opacity: 0.06;
+  color: var(--gold2);
+  pointer-events: none;
+}
+
+.la-hero::before {
+  top: -10px;
+  left: -10px;
+  transform: rotate(-15deg);
+}
+
+.la-hero::after {
+  content: '☀';
+  bottom: -10px;
+  right: -10px;
+  transform: rotate(15deg);
+}
+
+.la-hero-title {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  color: var(--gold2);
+  margin-bottom: var(--sp-sm);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.la-hero-subtitle {
+  color: var(--cream2);
+  font-size: 0.95rem;
+  margin-bottom: 0;
+  opacity: 0.9;
+}
+
+/* ===========================================================
+   FORM TRA CỨU
+   =========================================================== */
+.la-form-card {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--sp-lg);
+  margin-bottom: var(--sp-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.la-form-title {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: var(--red);
+  margin-bottom: var(--sp-md);
+  padding-bottom: var(--sp-sm);
+  border-bottom: 1px solid var(--cream3);
+}
+
+.la-form-row {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--sp-md);
+  flex-wrap: wrap;
+}
+
+.la-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-xs);
+  min-width: 80px;
+}
+
+.la-form-group--year {
+  min-width: 120px;
+}
+
+.la-form-btn-wrap {
+  padding-bottom: 0;
+}
+
+.la-label {
+  font-size: 0.85rem;
+  color: var(--ink3);
+  font-weight: 600;
+}
+
+.la-input {
+  padding: 10px 14px;
+  border: 2px solid var(--cream3);
+  border-radius: var(--r-md);
+  background: #fff;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--ink);
+  outline: none;
+  transition: border-color var(--trans-fast), box-shadow var(--trans-fast);
+  width: 100%;
+}
+
+.la-input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(200,146,10,0.18);
+}
+
+.la-btn-tra {
+  white-space: nowrap;
+  padding: 10px 28px;
+}
+
+/* ===========================================================
+   KẾT QUẢ TRA CỨU
+   =========================================================== */
+.la-result-card {
+  background: var(--cream);
+  border: 2px solid var(--gold);
+  border-radius: var(--r-lg);
+  padding: var(--sp-lg);
+  margin-bottom: var(--sp-lg);
+  box-shadow: var(--shadow-md);
+}
+
+/* Grid: cột trái to, cột phải chi tiết */
+.la-result-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--sp-lg);
+  align-items: start;
+  margin-bottom: var(--sp-lg);
+}
+
+/* Cột số ngày lớn */
+.la-result-main {
+  text-align: center;
+  background: linear-gradient(135deg, var(--red) 0%, var(--gold) 100%);
+  border-radius: var(--r-lg);
+  padding: var(--sp-lg) var(--sp-xl);
+  min-width: 160px;
+}
+
+.la-result-so {
+  font-family: var(--font-serif);
+  font-size: 4.5rem;
+  font-weight: 900;
+  color: var(--gold2);
+  line-height: 1;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  margin-bottom: var(--sp-xs);
+}
+
+.la-result-am-label {
+  color: var(--cream2);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: var(--sp-xs);
+}
+
+.la-result-thu {
+  color: rgba(255,255,255,0.8);
+  font-size: 0.8rem;
+}
+
+/* Cột chi tiết */
+.la-result-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-sm);
+}
+
+.la-info-group {
+  background: rgba(255,255,255,0.7);
+  border: 1px solid var(--cream3);
+  border-radius: var(--r-md);
+  padding: var(--sp-sm) var(--sp-md);
+}
+
+.la-info-label {
+  font-size: 0.75rem;
+  color: var(--ink3);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: var(--sp-xs);
+}
+
+.la-info-value {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.la-cc-badge {
+  color: var(--red);
+}
+
+.la-truc-badge {
+  color: var(--red2);
+}
+
+/* ===========================================================
+   SECTION 12 GIỜ
+   =========================================================== */
+.la-gio-section {
+  border-top: 1px solid var(--cream3);
+  padding-top: var(--sp-md);
+}
+
+.la-gio-title {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  color: var(--red);
+  margin-bottom: var(--sp-md);
+}
+
+.la-gio-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-sm);
+}
+
+.la-gio-item {
+  border-radius: var(--r-md);
+  padding: var(--sp-sm);
+  text-align: center;
+  transition: transform var(--trans-fast);
+}
+
+.la-gio-item:hover {
+  transform: translateY(-2px);
+}
+
+.la-gio-good {
+  background: var(--amber-light);
+  border: 1.5px solid var(--amber);
+}
+
+.la-gio-bad {
+  background: #f5f5f5;
+  border: 1.5px solid #ddd;
+  opacity: 0.7;
+}
+
+.la-gio-chi {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+
+.la-gio-range {
+  font-size: 0.75rem;
+  color: var(--ink3);
+  margin-bottom: var(--sp-xs);
+}
+
+.la-gio-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  border-radius: var(--r-pill);
+  padding: 2px 8px;
+  display: inline-block;
+}
+
+.la-badge-good {
+  background: var(--amber);
+  color: var(--ink);
+}
+
+.la-badge-bad {
+  background: #bbb;
+  color: #fff;
+}
+
+/* ===========================================================
+   AI BOX
+   =========================================================== */
+.la-ai-box {
+  background: linear-gradient(135deg, var(--cream) 0%, var(--cream2) 100%);
+  border: 2px solid var(--gold);
+  border-radius: var(--r-lg);
+  padding: var(--sp-lg);
+  margin-bottom: var(--sp-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.la-ai-box.la-ai-loading {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-md);
+  min-height: 80px;
+}
+
+.la-ai-box.la-ai-error {
+  border-color: var(--red-bad);
+  background: var(--red-light);
+}
+
+.la-ai-header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  margin-bottom: var(--sp-md);
+  padding-bottom: var(--sp-sm);
+  border-bottom: 1px solid var(--cream3);
+}
+
+.la-ai-icon {
+  font-size: 1.5rem;
+}
+
+.la-ai-content p {
+  color: var(--ink2);
+  line-height: 1.75;
+  font-size: 0.95rem;
+  margin-bottom: var(--sp-md);
+}
+
+.la-ai-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* ===========================================================
+   CALENDAR CARD
+   =========================================================== */
+.la-calendar-card {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--sp-lg);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--sp-xl);
+}
+
+/* Navigation tháng */
+.la-cal-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sp-md);
+}
+
+.la-cal-nav-title {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--red);
+}
+
+.la-cal-nav-btn {
+  background: var(--cream2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: var(--red);
+  cursor: pointer;
+  transition: background var(--trans-fast), transform var(--trans-fast);
+}
+
+.la-cal-nav-btn:hover {
+  background: var(--cream3);
+  transform: scale(1.08);
+}
+
+/* Header thứ */
+.la-cal-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  margin-bottom: var(--sp-xs);
+}
+
+.la-cal-weekday {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--ink3);
+  padding: var(--sp-xs) 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.la-cal-weekend {
+  color: var(--red-bad);
+}
+
+/* Grid ngày */
+.la-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+
+/* Mỗi ô ngày */
+.la-cal-day {
+  border: 1.5px solid transparent;
+  border-radius: var(--r-sm);
+  padding: var(--sp-xs) 4px;
+  text-align: center;
+  cursor: pointer;
+  transition: background var(--trans-fast), border-color var(--trans-fast), transform var(--trans-fast);
+  min-height: 52px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  background: rgba(255,255,255,0.6);
+}
+
+.la-cal-day:hover {
+  background: var(--cream2);
+  border-color: var(--border);
+  transform: scale(1.04);
+  z-index: 1;
+}
+
+/* Số ngày dương lớn */
+.la-cal-solar {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+/* Số ngày âm nhỏ */
+.la-cal-lunar {
+  font-size: 0.65rem;
+  color: var(--ink3);
+  line-height: 1.2;
+}
+
+/* Ngày tháng khác — nhạt đi */
+.la-cal-other {
+  opacity: 0.35;
+}
+
+.la-cal-other .la-cal-solar {
+  color: var(--ink3);
+}
+
+/* Ngày hôm nay — nổi bật đặc biệt */
+.la-cal-today {
+  background: linear-gradient(135deg, var(--red) 0%, var(--gold) 100%) !important;
+  border-color: var(--gold2) !important;
+  box-shadow: var(--shadow-sm);
+}
+
+.la-cal-today .la-cal-solar {
+  color: var(--gold2);
+  font-weight: 900;
+  font-size: 1rem;
+}
+
+.la-cal-today .la-cal-lunar {
+  color: rgba(255,255,255,0.8);
+}
+
+/* Ngày được chọn */
+.la-cal-selected {
+  border-color: var(--gold2) !important;
+  box-shadow: 0 0 0 2px rgba(200,146,10,0.4);
+  background: var(--amber-light) !important;
+}
+
+.la-cal-selected .la-cal-solar {
+  color: var(--red);
+  font-weight: 900;
+}
+
+/* Cuối tuần — chữ đỏ nhạt */
+.la-cal-weekend-day .la-cal-solar {
+  color: var(--red-bad);
+}
+
+/* Legend */
+.la-cal-legend {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-xs);
+  margin-top: var(--sp-md);
+  font-size: 0.78rem;
+  color: var(--ink3);
+  flex-wrap: wrap;
+}
+
+.la-legend-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.la-legend-today    { background: linear-gradient(135deg, var(--red), var(--gold)); }
+.la-legend-selected { background: var(--amber-light); border: 2px solid var(--gold2); }
+.la-legend-other    { background: rgba(100,60,10,0.1); }
+
+/* ===========================================================
+   RESPONSIVE
+   =========================================================== */
+@media (max-width: 768px) {
+  .la-result-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .la-result-main {
+    padding: var(--sp-md);
+    min-width: unset;
+  }
+
+  .la-result-so {
+    font-size: 3.5rem;
+  }
+
+  .la-result-detail {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .la-gio-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .la-form-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .la-form-group {
+    min-width: unset;
+  }
+
+  .la-cal-day {
+    min-height: 44px;
+    padding: 3px 2px;
+  }
+
+  .la-cal-solar {
+    font-size: 0.85rem;
+  }
+
+  .la-cal-lunar {
+    font-size: 0.58rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .la-gio-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .la-result-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .la-hero-title {
+    font-size: 1.6rem;
+  }
+
+  .la-cal-day {
+    min-height: 38px;
+  }
+
+  .la-cal-lunar {
+    display: none;
+  }
+}

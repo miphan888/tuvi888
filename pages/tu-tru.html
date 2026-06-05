@@ -1,0 +1,161 @@
+<!-- pages/tu-tru.html — Trang Tứ Trụ Bát Tự -->
+<link rel="stylesheet" href="css/tu-tru.css">
+
+<div class="app-container">
+
+  <!-- ===== TIÊU ĐỀ ===== -->
+  <h1 class="section-title">🔮 Tứ Trụ Bát Tự</h1>
+  <p class="section-subtitle">Nhập thông tin sinh nhật để lập tứ trụ và phân tích ngũ hành, dụng thần</p>
+
+  <!-- ===== FORM NHẬP THÔNG TIN ===== -->
+  <div class="form-section mb-lg">
+    <div class="tt-form-grid">
+
+      <!-- Họ tên -->
+      <div class="tt-form-group span-2">
+        <label class="tt-form-label" for="tt-ho-ten">Họ và tên</label>
+        <input type="text" id="tt-ho-ten" class="tt-form-input" placeholder="VD: Nguyễn Văn An">
+      </div>
+
+      <!-- Giới tính -->
+      <div class="tt-form-group">
+        <label class="tt-form-label">Giới tính</label>
+        <div class="tt-radio-group">
+          <label class="tt-radio-label">
+            <input type="radio" name="tt-gioi-tinh" id="tt-gioi-tinh" value="nam" checked>
+            <span>Nam</span>
+          </label>
+          <label class="tt-radio-label">
+            <input type="radio" name="tt-gioi-tinh" value="nu">
+            <span>Nữ</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Ngày sinh -->
+      <div class="tt-form-group">
+        <label class="tt-form-label" for="tt-ngay">Ngày sinh (DL)</label>
+        <input type="number" id="tt-ngay" class="tt-form-input" min="1" max="31" placeholder="1–31">
+      </div>
+
+      <!-- Tháng sinh -->
+      <div class="tt-form-group">
+        <label class="tt-form-label" for="tt-thang">Tháng sinh (DL)</label>
+        <input type="number" id="tt-thang" class="tt-form-input" min="1" max="12" placeholder="1–12">
+      </div>
+
+      <!-- Năm sinh -->
+      <div class="tt-form-group">
+        <label class="tt-form-label" for="tt-nam">Năm sinh (DL)</label>
+        <input type="number" id="tt-nam" class="tt-form-input" min="1900" max="2100" placeholder="VD: 1990">
+      </div>
+
+      <!-- Giờ sinh (12 Địa Chi) -->
+      <div class="tt-form-group">
+        <label class="tt-form-label" for="tt-gio">Giờ sinh (Địa Chi)</label>
+        <select id="tt-gio" class="tt-form-select">
+          <option value="0">Tý (23:00 – 01:00)</option>
+          <option value="1">Sửu (01:00 – 03:00)</option>
+          <option value="2">Dần (03:00 – 05:00)</option>
+          <option value="3">Mão (05:00 – 07:00)</option>
+          <option value="4">Thìn (07:00 – 09:00)</option>
+          <option value="5">Tỵ (09:00 – 11:00)</option>
+          <option value="6" selected>Ngọ (11:00 – 13:00)</option>
+          <option value="7">Mùi (13:00 – 15:00)</option>
+          <option value="8">Thân (15:00 – 17:00)</option>
+          <option value="9">Dậu (17:00 – 19:00)</option>
+          <option value="10">Tuất (19:00 – 21:00)</option>
+          <option value="11">Hợi (21:00 – 23:00)</option>
+        </select>
+      </div>
+
+      <!-- Múi giờ -->
+      <div class="tt-form-group">
+        <label class="tt-form-label" for="tt-mui-gio">Múi giờ</label>
+        <select id="tt-mui-gio" class="tt-form-select">
+          <option value="7" selected>UTC+7 (Việt Nam)</option>
+          <option value="8">UTC+8</option>
+          <option value="0">UTC+0</option>
+        </select>
+      </div>
+
+    </div><!-- /.tt-form-grid -->
+
+    <div class="tt-submit-wrap">
+      <button class="btn btn-primary" id="tt-btn-phan-tich" onclick="tuTruPhanTich()">
+        🔮 Phân Tích Tứ Trụ Bát Tự
+      </button>
+    </div>
+  </div><!-- /.form-section -->
+
+  <!-- ===== KẾT QUẢ (ẩn ban đầu) ===== -->
+  <div id="tt-result-section" class="hidden">
+
+    <!-- ===== 4 Ô Trụ ===== -->
+    <h3 class="tt-result-title">Tứ Trụ (Can Chi)</h3>
+    <div class="tt-bon-tru" id="tt-bon-tru">
+      <!-- Render bởi _ttHienThiTuTru() -->
+    </div>
+
+    <!-- ===== TABS ===== -->
+    <div class="tt-tabs-wrap">
+      <div class="tt-tabs-bar">
+        <button class="tt-tab-btn active" data-tab="tu-tru">⚖ Ngũ Hành</button>
+        <button class="tt-tab-btn" data-tab="vuong-nhuoc">💪 Thân Vượng/Nhược</button>
+        <button class="tt-tab-btn" data-tab="dung-than">✦ Dụng Thần</button>
+        <button class="tt-tab-btn" data-tab="ai">🤖 AI Luận Đoán</button>
+      </div>
+
+      <!-- ===== Tab Ngũ Hành ===== -->
+      <div class="tt-tab-panel" data-panel="tu-tru">
+        <div class="tt-ngu-hanh-wrap">
+          <h4 class="tt-panel-title">Phân Bố Ngũ Hành</h4>
+          <!-- Biểu đồ bar ngang -->
+          <div class="tt-chart-box" id="tt-ngu-hanh-chart">
+            <!-- Render bởi _ttHienThiNguHanh() -->
+          </div>
+          <!-- Tương sinh tương khắc chú thích -->
+          <div class="tt-nh-info">
+            <div class="tt-nh-info-row">
+              <span class="tt-nh-info-label">Tương sinh:</span>
+              <span class="tt-nh-info-val">Mộc → Hỏa → Thổ → Kim → Thủy → Mộc</span>
+            </div>
+            <div class="tt-nh-info-row">
+              <span class="tt-nh-info-label">Tương khắc:</span>
+              <span class="tt-nh-info-val">Mộc ✗ Thổ ✗ Thủy ✗ Hỏa ✗ Kim ✗ Mộc</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Tab Thân Vượng/Nhược ===== -->
+      <div class="tt-tab-panel hidden" data-panel="vuong-nhuoc">
+        <div id="tt-vuong-nhuoc-content">
+          <!-- Render bởi _ttHienThiVuongNhuoc() -->
+        </div>
+      </div>
+
+      <!-- ===== Tab Dụng Thần ===== -->
+      <div class="tt-tab-panel hidden" data-panel="dung-than">
+        <div id="tt-dung-than-content">
+          <!-- Render bởi _ttHienThiDungThan() -->
+        </div>
+      </div>
+
+      <!-- ===== Tab AI Luận Đoán ===== -->
+      <div class="tt-tab-panel hidden" data-panel="ai">
+        <div class="tt-ai-wrap">
+          <div class="tt-ai-btn-wrap">
+            <button class="btn btn-primary" onclick="tuTruLuanDoanLai()">
+              ✨ Luận Đoán bằng AI
+            </button>
+          </div>
+          <div id="tt-ai-container"></div>
+        </div>
+      </div>
+
+    </div><!-- /.tt-tabs-wrap -->
+
+  </div><!-- /#tt-result-section -->
+
+</div><!-- /.app-container -->
