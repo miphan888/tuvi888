@@ -736,53 +736,91 @@ function _vkPrint() {
   var bai     = _vkState.currentBai;
   var content = _vkState.previewHtml;
 
-  /* Kiểm tra có nội dung không */
+  /* BƯỚC 1: Kiểm tra có nội dung không */
   if (!bai || !content || !content.trim()) {
     showToast('Chưa có nội dung để in. Vui lòng xem trước bài khấn trước.', 'error');
     return;
   }
 
-  /* Lấy hoặc tạo vùng in ngoài body (không nằm trong overlay) */
-  var printArea = document.getElementById('vk-print-area');
+  /* BƯỚC 2: Tìm vùng in là DIRECT CHILD của body
+     QUAN TRỌNG: Phải là body-level element để @media print hoạt động đúng.
+     body > *:not(#vk-print-area) chỉ ẩn direct children của body.
+     Không dùng getElementById vì có thể tìm nhầm element bên trong #app. */
+  var printArea = null;
+  var bodyChildren = document.body.children;
+  for (var i = 0; i < bodyChildren.length; i++) {
+    if (bodyChildren[i].id === 'vk-print-area') {
+      printArea = bodyChildren[i];
+      break;
+    }
+  }
+
+  /* Nếu không tìm thấy thì tạo mới và append thẳng vào body */
   if (!printArea) {
     printArea = document.createElement('div');
     printArea.id = 'vk-print-area';
     document.body.appendChild(printArea);
   }
 
-  /* Xóa style display:none để có thể đo scrollHeight */
-  printArea.style.display = 'block';
-  printArea.style.position = 'absolute';
-  printArea.style.left = '-9999px';
-  printArea.style.top = '0';
-  printArea.style.width = '170mm';
-  printArea.style.background = '#fff';
-  printArea.style.color = '#000';
-  printArea.style.fontFamily = "'Noto Serif', 'Times New Roman', serif";
-
-  /* Ghi nội dung thuần text vào vùng in */
+  /* BƯỚC 3: Ghi nội dung thuần text vào vùng in.
+     Tiêu đề + nội dung bài khấn đã thay placeholder.
+     Phần đã điền bọc trong <strong>. KHÔNG có button/form/decoration. */
   printArea.innerHTML =
     '<div class="vkprint-title">' +
       _vkEscape(bai.title).toUpperCase() +
     '</div>' +
     _vkContentForPrint(content, _vkState.formData);
 
-  /* Tự scale font để vừa 1 trang A4 */
-  _vkAutoScaleFont(printArea);
+  /* BƯỚC 4: Tạm hiện off-screen để đo scrollHeight */
+  printArea.style.cssText =
+    'display:block;' +
+    'position:absolute;' +
+    'left:-9999px;' +
+    'top:0;' +
+    'width:180mm;' +
+    'padding:0;' +
+    'visibility:hidden;' +
+    'font-family:"Noto Serif","Times New Roman",serif;' +
+    'white-space:pre-line;';
 
-  /* Khôi phục về vị trí bình thường trước khi print */
-  printArea.style.position = '';
-  printArea.style.left = '';
-  printArea.style.top = '';
-  printArea.style.width = '';
+  /* BƯỚC 5: Auto-scale font để vừa 1 trang A4.
+     A4 khả dụng: 297mm - 30mm margin = 267mm x 3.78px/mm ~ 1009px */
+  var maxH = 273 * 3.78;
+  var fs   = 13;      /* font-size ban đầu 13pt */
+  var lh   = 1.75;    /* line-height ban đầu 1.75 */
 
-  /* Gọi in */
+  printArea.style.fontSize   = fs + 'pt';
+  printArea.style.lineHeight = String(lh);
+
+  /* Giảm dần cho đến khi vừa trang hoặc đạt min 7.5pt */
+  while (printArea.scrollHeight > maxH && fs > 7.5) {
+    fs  = Math.round((fs  - 0.5)  * 10)  / 10;
+    lh  = Math.max(1.25, Math.round((lh - 0.04) * 100) / 100);
+    printArea.style.fontSize   = fs + 'pt';
+    printArea.style.lineHeight = String(lh);
+  }
+
+  /* BƯỚC 6: Reset về trạng thái hiển thị bình thường để in
+     QUAN TRỌNG: KHÔNG đặt display:none ở đây — phải để visible cho window.print()
+     Sau khi in xong mới ẩn lại ở bước 9 */
+  printArea.style.cssText = '';
+  printArea.style.setProperty('--vk-print-fs', fs + 'pt');
+  printArea.style.setProperty('--vk-print-lh', String(lh));
+
+  /* BƯỚC 7: Ẩn khỏi màn hình thường nhưng VẪN visible cho printer
+     position:fixed left:-9999px không ảnh hưởng @media print
+     vì @media print override với position:static */
+  printArea.style.position = 'fixed';
+  printArea.style.left = '-9999px';
+  printArea.style.top = '0';
+
+  /* BƯỚC 8: Gọi in — @media print sẽ override style, hiện #vk-print-area đúng cách */
   window.print();
 
-  /* Sau khi in xong: ẩn lại vùng in */
+  /* BƯỚC 9: Sau khi in xong, ẩn lại vùng in */
   setTimeout(function() {
-    printArea.style.display = 'none';
-  }, 1000);
+    printArea.style.cssText = 'display:none;';
+  }, 1500);
 }
 
 /* ---- Chuyển content thành dạng in (bold lời cầu bổ sung) ---- */
@@ -864,9 +902,14 @@ function _vkCloseModal() {
     overlay.classList.remove('open');
     document.body.style.overflow = '';
   }
-  /* Xóa vùng in */
-  var printArea = document.getElementById('vk-print-area');
-  if (printArea) printArea.innerHTML = '';
+  /* Xóa vùng in — tìm đúng body-level element */
+  var bodyChildren = document.body.children;
+  for (var i = 0; i < bodyChildren.length; i++) {
+    if (bodyChildren[i].id === 'vk-print-area') {
+      bodyChildren[i].innerHTML = '';
+      break;
+    }
+  }
 }
 
 /* ---- Xử lý phím Escape ---- */
