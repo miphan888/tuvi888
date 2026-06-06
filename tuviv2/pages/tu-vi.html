@@ -1,0 +1,123 @@
+<section id="sect-tu-vi">
+
+  <!-- FORM + TỨ TRỤ -->
+  <div class="grid-2" style="margin-bottom:20px">
+
+    <!-- FORM NHẬP -->
+    <div class="card">
+      <div class="card-title">🔮 Lập Lá Số Tử Vi Đẩu Số</div>
+
+      <div class="form-row">
+        <div class="form-group" style="flex:2">
+          <label>Họ và Tên</label>
+          <input type="text" id="tv-ten" placeholder="Nhập họ tên...">
+        </div>
+        <div class="form-group" style="flex:1">
+          <label>Giới tính</label>
+          <div class="radio-group">
+            <label><input type="radio" name="tv-gt" value="nam" checked> Nam</label>
+            <label><input type="radio" name="tv-gt" value="nu"> Nữ</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Ngày sinh</label>
+          <input type="number" id="tv-day" min="1" max="31" placeholder="DD">
+        </div>
+        <div class="form-group">
+          <label>Tháng</label>
+          <input type="number" id="tv-month" min="1" max="12" placeholder="MM">
+        </div>
+        <div class="form-group">
+          <label>Năm</label>
+          <input type="number" id="tv-year" min="1900" max="2100" placeholder="YYYY">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group" style="flex:2">
+          <label>Giờ sinh (Địa Chi)</label>
+          <select id="tv-gio">
+            <option value="">— Không biết giờ —</option>
+            <option value="Tý">Tý (23:00–01:00)</option>
+            <option value="Sửu">Sửu (01:00–03:00)</option>
+            <option value="Dần">Dần (03:00–05:00)</option>
+            <option value="Mão">Mão (05:00–07:00)</option>
+            <option value="Thìn">Thìn (07:00–09:00)</option>
+            <option value="Tỵ">Tỵ (09:00–11:00)</option>
+            <option value="Ngọ">Ngọ (11:00–13:00)</option>
+            <option value="Mùi">Mùi (13:00–15:00)</option>
+            <option value="Thân">Thân (15:00–17:00)</option>
+            <option value="Dậu">Dậu (17:00–19:00)</option>
+            <option value="Tuất">Tuất (19:00–21:00)</option>
+            <option value="Hợi">Hợi (21:00–23:00)</option>
+          </select>
+        </div>
+        <div class="form-group" style="flex:1">
+          <label>Múi giờ</label>
+          <select id="tv-tz">
+            <option value="7" selected>UTC+7</option>
+            <option value="8">UTC+8</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn" onclick="tvLapLaSo()">🔮 Lập Lá Số</button>
+    </div>
+
+    <!-- TỨ TRỤ + MỆNH INFO -->
+    <div class="card" id="tv-summary" style="display:none">
+      <div class="card-title">Tứ Trụ — <span id="tv-ten-display"></span></div>
+      <div id="tv-tu-tru"></div>
+      <hr class="divider">
+      <div id="tv-menh-info"></div>
+    </div>
+
+  </div>
+
+  <!-- TABS CHÍNH -->
+  <div id="tv-main" style="display:none">
+    <div class="sub-tabs" id="tv-tabs">
+      <div class="sub-tab active" onclick="tvShowTab('la-so')">🏯 Lá Số</div>
+      <div class="sub-tab" onclick="tvShowTab('dai-van')">📅 Đại Vận</div>
+      <div class="sub-tab" onclick="tvShowTab('luan-giai')">📋 Luận Giải</div>
+    </div>
+
+    <!-- Tab Lá Số -->
+    <div id="tv-tab-la-so">
+      <div class="card">
+        <div class="card-title">Lá Số Tử Vi <span style="font-size:12px;color:var(--ink3);font-weight:400;margin-left:8px">(click vào cung để xem chi tiết)</span></div>
+        <div id="tv-la-so-grid"></div>
+      </div>
+    </div>
+
+    <!-- Tab Đại Vận -->
+    <div id="tv-tab-dai-van" style="display:none">
+      <div class="card">
+        <div class="card-title">Đại Vận · Tiểu Vận</div>
+        <div id="tv-dai-van-list"></div>
+      </div>
+    </div>
+
+    <!-- Tab Luận Giải -->
+    <div id="tv-tab-luan-giai" style="display:none">
+      <div id="tv-luan-giai-content">
+        <div style="padding:40px;text-align:center;color:var(--ink3)">
+          <p>Nhấn "Lập Lá Số" rồi chuyển sang tab này để xem luận giải.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- Popup chi tiết cung -->
+<div class="popup-overlay" id="tv-cung-popup">
+  <div class="popup-box">
+    <span class="popup-close" onclick="tvDongPopup()">✕</span>
+    <h2 id="tv-popup-title">—</h2>
+    <div id="tv-popup-content"></div>
+  </div>
+</div>

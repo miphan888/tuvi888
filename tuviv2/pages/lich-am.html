@@ -1,0 +1,65 @@
+<!-- pages/lich-am.html — Trang Lịch Âm Dương -->
+<link rel="stylesheet" href="css/lich-am.css">
+
+<div class="app-container">
+
+  <!-- ===== HERO BANNER ===== -->
+  <div class="la-hero">
+    <h1 class="la-hero-title">📅 Lịch Âm Dương</h1>
+    <p class="la-hero-subtitle">Tra cứu ngày âm, can chi, tiết khí, giờ Hoàng Đạo — chính xác từ 1900 đến 2100</p>
+  </div>
+
+  <!-- ===== FORM TRA CỨU ===== -->
+  <div class="la-form-card">
+    <h3 class="la-form-title">🔍 Tra Cứu Ngày Dương Lịch</h3>
+    <div class="la-form-row">
+      <div class="la-form-group">
+        <label class="la-label" for="la-ngay">Ngày</label>
+        <input type="number" id="la-ngay" class="la-input" min="1" max="31" placeholder="Ngày">
+      </div>
+      <div class="la-form-group">
+        <label class="la-label" for="la-thang">Tháng</label>
+        <input type="number" id="la-thang" class="la-input" min="1" max="12" placeholder="Tháng">
+      </div>
+      <div class="la-form-group la-form-group--year">
+        <label class="la-label" for="la-nam">Năm</label>
+        <input type="number" id="la-nam" class="la-input" min="1900" max="2100" placeholder="Năm">
+      </div>
+      <div class="la-form-group la-form-btn-wrap">
+        <button class="btn btn-primary la-btn-tra" onclick="lichAmTraCuu()">Tra Cứu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== KẾT QUẢ (engine cục bộ, hiện ngay) ===== -->
+  <div id="la-ket-qua" class="la-result-card hidden">
+    <!-- Render bởi _laHienThiKetQua() trong lich-am-ui.js -->
+  </div>
+
+  <!-- ===== AI LUẬN GIẢI (nút riêng, không tự động) ===== -->
+  <div id="la-ai-section" class="hidden">
+    <div id="la-ai-container">
+      <!-- Render bởi LichAmAI.luanGiai() khi nhấn nút AI -->
+    </div>
+  </div>
+
+  <div class="ornament">❧ ✦ ❧</div>
+
+  <!-- ===== CALENDAR THÁNG INTERACTIVE ===== -->
+  <div class="la-calendar-card">
+    <div class="la-cal-nav">
+      <button class="la-cal-nav-btn" onclick="lichAmPrevMonth()" title="Tháng trước">‹</button>
+      <div id="la-cal-title" class="la-cal-nav-title">Tháng ... / ...</div>
+      <button class="la-cal-nav-btn" onclick="lichAmNextMonth()" title="Tháng sau">›</button>
+    </div>
+    <div id="la-calendar">
+      <!-- Render bởi _laRenderCalendar() trong lich-am-ui.js -->
+    </div>
+    <div class="la-cal-legend">
+      <span class="la-legend-dot la-legend-today"></span> Hôm nay &nbsp;
+      <span class="la-legend-dot la-legend-selected"></span> Đã chọn &nbsp;
+      <span class="la-legend-dot la-legend-other"></span> Tháng khác
+    </div>
+  </div>
+
+</div><!-- /.app-container -->
